@@ -1,0 +1,599 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="17.0.1" class="java.beans.XMLDecoder">
+ <object class="models.ConcordServer">
+  <void property="channel">
+   <object class="models.Channel" id="Channel0">
+    <void property="messages">
+     <void method="add">
+      <object class="models.Message">
+       <void property="content">
+        <string>i&apos;ll get pizza</string>
+       </void>
+       <void property="user">
+        <object class="models.User" id="User0">
+         <void property="id">
+          <int>2</int>
+         </void>
+         <void property="invites">
+          <void method="add">
+           <object class="models.Server" id="Server0">
+            <void property="admin">
+             <object class="models.User" id="User1">
+              <void property="password">
+               <string>map55</string>
+              </void>
+              <void property="realName">
+               <string>jay</string>
+              </void>
+              <void property="role">
+               <object class="models.Role" id="Role0"/>
+              </void>
+              <void property="roles">
+               <void method="put">
+                <object idref="Server0"/>
+                <object idref="Role0"/>
+               </void>
+              </void>
+              <void property="userName">
+               <string>jhoya101</string>
+              </void>
+              <void id="Integer0" property="id"/>
+             </object>
+            </void>
+            <void property="channels">
+             <object class="java.util.ArrayList"/>
+            </void>
+            <void property="rolebuilder">
+             <object class="models.RoleBuilder"/>
+            </void>
+            <void property="server">
+             <object class="java.util.HashMap">
+              <void method="put">
+               <object idref="User1"/>
+               <object idref="Role0"/>
+              </void>
+             </object>
+            </void>
+            <void property="userids1">
+             <object class="java.util.ArrayList">
+              <void method="add">
+               <int>1</int>
+              </void>
+             </object>
+            </void>
+           </object>
+          </void>
+         </void>
+         <void property="password">
+          <string>bobo</string>
+         </void>
+         <void property="realName">
+          <string>will</string>
+         </void>
+         <void property="userName">
+          <string>willie1</string>
+         </void>
+        </object>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="models.Message">
+       <void property="content">
+        <string>i can get cookies</string>
+       </void>
+       <void property="user">
+        <object class="models.User" id="User2">
+         <void property="id">
+          <int>3</int>
+         </void>
+         <void property="invites">
+          <void method="add">
+           <object class="models.Server" id="Server1">
+            <void property="admin">
+             <object class="models.User" id="User3">
+              <void property="password">
+               <string>map55</string>
+              </void>
+              <void property="realName">
+               <string>jay</string>
+              </void>
+              <void property="role">
+               <object class="models.Role" id="Role1"/>
+              </void>
+              <void property="roles">
+               <void method="put">
+                <object idref="Server1"/>
+                <object idref="Role1"/>
+               </void>
+              </void>
+              <void property="userName">
+               <string>jhoya101</string>
+              </void>
+             </object>
+            </void>
+            <void property="channels">
+             <object class="java.util.ArrayList"/>
+            </void>
+            <void property="rolebuilder">
+             <object class="models.RoleBuilder"/>
+            </void>
+            <void property="server">
+             <object class="java.util.HashMap">
+              <void method="put">
+               <object idref="User3"/>
+               <object idref="Role1"/>
+              </void>
+             </object>
+            </void>
+            <void property="userids1">
+             <object class="java.util.ArrayList">
+              <void method="add">
+               <int>1</int>
+              </void>
+             </object>
+            </void>
+           </object>
+          </void>
+         </void>
+         <void property="password">
+          <string>dxxd</string>
+         </void>
+         <void property="realName">
+          <string>Don</string>
+         </void>
+         <void property="userName">
+          <string>5donald</string>
+         </void>
+        </object>
+       </void>
+      </object>
+     </void>
+    </void>
+    <void property="name">
+     <string>food</string>
+    </void>
+   </object>
+  </void>
+  <void property="server">
+   <object class="models.Server" id="Server2">
+    <void property="admin">
+     <object class="models.User" id="User4">
+      <void property="password">
+       <string>map55</string>
+      </void>
+      <void property="realName">
+       <string>jay</string>
+      </void>
+      <void property="role">
+       <object class="models.Role" id="Role2"/>
+      </void>
+      <void property="roles">
+       <void method="put">
+        <object idref="Server2"/>
+        <object idref="Role2"/>
+       </void>
+      </void>
+      <void property="userName">
+       <string>jhoya101</string>
+      </void>
+     </object>
+    </void>
+    <void property="channels">
+     <object class="java.util.ArrayList">
+      <void method="add">
+       <object idref="Channel0"/>
+      </void>
+     </object>
+    </void>
+    <void property="rolebuilder">
+     <object class="models.RoleBuilder"/>
+    </void>
+    <void property="server">
+     <object class="java.util.HashMap">
+      <void method="put">
+       <object idref="User4"/>
+       <object idref="Role2"/>
+      </void>
+      <void method="put">
+       <object class="models.User" id="User5">
+        <void property="id">
+         <int>2</int>
+        </void>
+        <void property="invites">
+         <void method="add">
+          <object class="models.Server" id="Server3">
+           <void property="admin">
+            <object class="models.User" id="User6">
+             <void property="password">
+              <string>map55</string>
+             </void>
+             <void property="realName">
+              <string>jay</string>
+             </void>
+             <void property="role">
+              <object class="models.Role" id="Role3"/>
+             </void>
+             <void property="roles">
+              <void method="put">
+               <object idref="Server3"/>
+               <object idref="Role3"/>
+              </void>
+             </void>
+             <void property="userName">
+              <string>jhoya101</string>
+             </void>
+            </object>
+           </void>
+           <void property="channels">
+            <object class="java.util.ArrayList"/>
+           </void>
+           <void property="rolebuilder">
+            <object class="models.RoleBuilder"/>
+           </void>
+           <void property="server">
+            <object class="java.util.HashMap">
+             <void method="put">
+              <object idref="User6"/>
+              <object idref="Role3"/>
+             </void>
+            </object>
+           </void>
+           <void property="userids1">
+            <object class="java.util.ArrayList">
+             <void method="add">
+              <int>1</int>
+             </void>
+            </object>
+           </void>
+          </object>
+         </void>
+        </void>
+        <void property="password">
+         <string>bobo</string>
+        </void>
+        <void property="realName">
+         <string>will</string>
+        </void>
+        <void property="role">
+         <object class="models.Role" id="Role4">
+          <void class="models.Role" method="getField">
+           <string>name</string>
+           <void method="set">
+            <object idref="Role4"/>
+            <string>member</string>
+           </void>
+          </void>
+          <void property="addAdmin">
+           <boolean>false</boolean>
+          </void>
+          <void property="addChannel">
+           <boolean>false</boolean>
+          </void>
+          <void property="addModerator">
+           <boolean>false</boolean>
+          </void>
+          <void property="removeChannel">
+           <boolean>false</boolean>
+          </void>
+          <void property="removeMember">
+           <boolean>false</boolean>
+          </void>
+          <void property="removeModerator">
+           <boolean>false</boolean>
+          </void>
+          <void class="models.Role" method="getField">
+           <string>name</string>
+           <void method="set">
+            <object idref="Role4"/>
+            <string>member</string>
+           </void>
+          </void>
+          <void property="addAdmin">
+           <boolean>false</boolean>
+          </void>
+          <void property="addChannel">
+           <boolean>false</boolean>
+          </void>
+          <void property="addModerator">
+           <boolean>false</boolean>
+          </void>
+          <void property="removeChannel">
+           <boolean>false</boolean>
+          </void>
+          <void property="removeMember">
+           <boolean>false</boolean>
+          </void>
+          <void property="removeModerator">
+           <boolean>false</boolean>
+          </void>
+         </object>
+        </void>
+        <void property="roles">
+         <void method="put">
+          <object idref="Server2"/>
+          <object idref="Role4"/>
+         </void>
+        </void>
+        <void property="userName">
+         <string>willie1</string>
+        </void>
+       </object>
+       <object idref="Role4"/>
+      </void>
+      <void method="put">
+       <object class="models.User" id="User7">
+        <void property="id">
+         <int>3</int>
+        </void>
+        <void property="invites">
+         <void method="add">
+          <object class="models.Server" id="Server4">
+           <void property="admin">
+            <object class="models.User" id="User8">
+             <void property="password">
+              <string>map55</string>
+             </void>
+             <void property="realName">
+              <string>jay</string>
+             </void>
+             <void property="role">
+              <object class="models.Role" id="Role5"/>
+             </void>
+             <void property="roles">
+              <void method="put">
+               <object idref="Server4"/>
+               <object idref="Role5"/>
+              </void>
+             </void>
+             <void property="userName">
+              <string>jhoya101</string>
+             </void>
+            </object>
+           </void>
+           <void property="channels">
+            <object class="java.util.ArrayList"/>
+           </void>
+           <void property="rolebuilder">
+            <object class="models.RoleBuilder"/>
+           </void>
+           <void property="server">
+            <object class="java.util.HashMap">
+             <void method="put">
+              <object idref="User8"/>
+              <object idref="Role5"/>
+             </void>
+            </object>
+           </void>
+           <void property="userids1">
+            <object class="java.util.ArrayList">
+             <void method="add">
+              <int>1</int>
+             </void>
+            </object>
+           </void>
+          </object>
+         </void>
+        </void>
+        <void property="password">
+         <string>dxxd</string>
+        </void>
+        <void property="realName">
+         <string>Don</string>
+        </void>
+        <void property="role">
+         <object class="models.Role" id="Role6">
+          <void class="models.Role" method="getField">
+           <string>name</string>
+           <void method="set">
+            <object idref="Role6"/>
+            <string>member</string>
+           </void>
+          </void>
+          <void property="addAdmin">
+           <boolean>false</boolean>
+          </void>
+          <void property="addChannel">
+           <boolean>false</boolean>
+          </void>
+          <void property="addModerator">
+           <boolean>false</boolean>
+          </void>
+          <void property="removeChannel">
+           <boolean>false</boolean>
+          </void>
+          <void property="removeMember">
+           <boolean>false</boolean>
+          </void>
+          <void property="removeModerator">
+           <boolean>false</boolean>
+          </void>
+          <void class="models.Role" method="getField">
+           <string>name</string>
+           <void method="set">
+            <object idref="Role6"/>
+            <string>member</string>
+           </void>
+          </void>
+          <void property="addAdmin">
+           <boolean>false</boolean>
+          </void>
+          <void property="addChannel">
+           <boolean>false</boolean>
+          </void>
+          <void property="addModerator">
+           <boolean>false</boolean>
+          </void>
+          <void property="removeChannel">
+           <boolean>false</boolean>
+          </void>
+          <void property="removeMember">
+           <boolean>false</boolean>
+          </void>
+          <void property="removeModerator">
+           <boolean>false</boolean>
+          </void>
+         </object>
+        </void>
+        <void property="roles">
+         <void method="put">
+          <object idref="Server2"/>
+          <object idref="Role6"/>
+         </void>
+        </void>
+        <void property="userName">
+         <string>5donald</string>
+        </void>
+       </object>
+       <object idref="Role6"/>
+      </void>
+     </object>
+    </void>
+    <void property="userids1">
+     <object class="java.util.ArrayList" id="ArrayList0">
+      <void method="add">
+       <object idref="Integer0"/>
+      </void>
+      <void method="add">
+       <int>2</int>
+      </void>
+      <void method="add">
+       <int>3</int>
+      </void>
+     </object>
+    </void>
+   </object>
+  </void>
+  <void property="servermanager">
+   <object class="models.ServerManager" id="ServerManager0">
+    <void property="SM">
+     <void method="add">
+      <object idref="Server2"/>
+     </void>
+    </void>
+   </object>
+  </void>
+  <void property="user">
+   <object class="models.User" id="User9">
+    <void property="id">
+     <int>3</int>
+    </void>
+    <void property="invites">
+     <void method="add">
+      <object class="models.Server" id="Server5">
+       <void property="admin">
+        <object class="models.User" id="User10">
+         <void property="password">
+          <string>map55</string>
+         </void>
+         <void property="realName">
+          <string>jay</string>
+         </void>
+         <void property="role">
+          <object class="models.Role" id="Role7"/>
+         </void>
+         <void property="roles">
+          <void method="put">
+           <object idref="Server5"/>
+           <object idref="Role7"/>
+          </void>
+         </void>
+         <void property="userName">
+          <string>jhoya101</string>
+         </void>
+        </object>
+       </void>
+       <void property="channels">
+        <object class="java.util.ArrayList"/>
+       </void>
+       <void property="rolebuilder">
+        <object class="models.RoleBuilder"/>
+       </void>
+       <void property="server">
+        <object class="java.util.HashMap">
+         <void method="put">
+          <object idref="User10"/>
+          <object idref="Role7"/>
+         </void>
+        </object>
+       </void>
+       <void property="userids1">
+        <object class="java.util.ArrayList">
+         <void method="add">
+          <object idref="Integer0"/>
+         </void>
+        </object>
+       </void>
+      </object>
+     </void>
+    </void>
+    <void property="password">
+     <string>dxxd</string>
+    </void>
+    <void property="realName">
+     <string>Don</string>
+    </void>
+    <void property="userName">
+     <string>5donald</string>
+    </void>
+   </object>
+  </void>
+  <void property="userids">
+   <object idref="ArrayList0"/>
+  </void>
+  <void property="usermanager">
+   <object class="models.UserManager" id="UserManager0">
+    <void property="UM">
+     <void method="add">
+      <object class="models.User">
+       <void property="password">
+        <string>map55</string>
+       </void>
+       <void property="realName">
+        <string>jay</string>
+       </void>
+       <void property="userName">
+        <string>jhoya101</string>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="models.User">
+       <void property="id">
+        <int>2</int>
+       </void>
+       <void property="password">
+        <string>bobo</string>
+       </void>
+       <void property="realName">
+        <string>will</string>
+       </void>
+       <void property="userName">
+        <string>willie1</string>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="models.User">
+       <void property="id">
+        <int>3</int>
+       </void>
+       <void property="password">
+        <string>dxxd</string>
+       </void>
+       <void property="realName">
+        <string>Don</string>
+       </void>
+       <void property="userName">
+        <string>5donald</string>
+       </void>
+      </object>
+     </void>
+    </void>
+   </object>
+  </void>
+  <void property="visits">
+   <int>6</int>
+  </void>
+ </object>
+</java>
