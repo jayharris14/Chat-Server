@@ -8,8 +8,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import views.CreateAccountController;
+import views.DirectConversationController;
 import views.MainController;
 import views.ServerController;
+import views.UserInfoController;
 import views.UserPageController;
 import java.rmi.*;
 
@@ -119,6 +121,34 @@ public class ViewTransitionalModel implements ViewTransitionModelInterface
 				e.printStackTrace();
 			}
 		}
+		
+		public void showDirectConversation() throws AlreadyBoundException, InterruptedException, NotBoundException {
+			FXMLLoader loader=new FXMLLoader();
+			loader.setLocation(ViewTransitionalModel.class.getResource("../views/DirectConversationView.fxml"));
+			try {
+				Pane view=loader.load();
+				mainview.setCenter(view);
+				DirectConversationController cont=loader.getController();
+				cont.setModel(this, model);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		public void showUserInfo() throws AlreadyBoundException, InterruptedException, NotBoundException {
+			FXMLLoader loader=new FXMLLoader();
+			loader.setLocation(ViewTransitionalModel.class.getResource("../views/UserInfoView.fxml"));
+			try {
+				Pane view=loader.load();
+				mainview.setCenter(view);
+				UserInfoController cont=loader.getController();
+				cont.setModel(this, model);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		
 		
 }

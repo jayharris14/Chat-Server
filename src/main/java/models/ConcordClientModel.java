@@ -15,6 +15,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 
 
 
@@ -23,6 +24,17 @@ public class ConcordClientModel extends UnicastRemoteObject implements RMIObserv
 	static ConcordServerInterface cs;
 	UserManager usermanager;
 	User user= new User();
+	User user2=new User();
+	public User getUser2() {
+		return user2;
+	}
+
+
+	public void setUser2(User user2) {
+		this.user2 = user2;
+	}
+
+
 	Server server;
 	ServerManager servermanager;
 	ObservableList<Button> userserverlist= FXCollections.observableArrayList();
@@ -30,6 +42,8 @@ public class ConcordClientModel extends UnicastRemoteObject implements RMIObserv
 	ObservableList<Message> messagelist= FXCollections.observableArrayList();
 	ObservableList<Button> serverlist= FXCollections.observableArrayList();
 	ObservableList<Button> userlist= FXCollections.observableArrayList();
+	ObservableList<Button> dcuserlist= FXCollections.observableArrayList();
+	ObservableList<String> infolist= FXCollections.observableArrayList();
 	Role role=new Role();
 	Channel channel=new Channel();
 	DirectConversation directconversation;
@@ -117,6 +131,19 @@ public class ConcordClientModel extends UnicastRemoteObject implements RMIObserv
 		return userserverlist;
 	}
 	
+	public ObservableList<javafx.scene.control.Button> dcusers() throws RemoteException {
+		ArrayList<User> users=new ArrayList<User>();
+		users.add(this.user);
+		users.add(this.user2);
+		ArrayList<Button> buttons=new ArrayList<Button>();
+		for (int i=0; i<2; i++) {
+			Button button = new Button(users.get(i).userName);
+			dcuserlist.add(button);
+		}	
+	
+		return dcuserlist;
+	}
+	
 	public ArrayList<Server> getServers() throws RemoteException {
 		ArrayList<Server> servers=cs.getuserservers(user);
 		return servers;
@@ -132,8 +159,8 @@ public class ConcordClientModel extends UnicastRemoteObject implements RMIObserv
 		ArrayList<Channel> channels=cs.getserverchannels(server);
 		return channels;
 	}
-	public void notifyFinished(String name) {
-		System.out.println(name +" was notfied");
+	public void notifyFinished() {
+		System.out.println(" I was notfied");
 		
 	}
 	
@@ -151,6 +178,16 @@ public class ConcordClientModel extends UnicastRemoteObject implements RMIObserv
 	public ArrayList<User> getallusers(String name) throws RemoteException{
 		ArrayList<User> serverusers=cs.getserverusers(name);
 		return serverusers;
+	}
+	
+	public void creatdcs(String name, String name2) throws RemoteException{
+		cs.createdirectconversation(name, name2);
+		
+	}
+	
+	public ArrayList<DirectConversation> getpastdcs() throws RemoteException{
+		ArrayList<DirectConversation> directconversations=cs.getalldirectconversations();
+		return directconversations;
 	}
 	
 
@@ -255,7 +292,7 @@ public class ConcordClientModel extends UnicastRemoteObject implements RMIObserv
 	public void kickuser(String name) throws RemoteException, AlreadyBoundException, InterruptedException, NotBoundException{
 		cs.kick(server, name);
 	}
-
+/*
 
 	@Override
 	public void notifyFinished2(String name)
@@ -278,7 +315,7 @@ public class ConcordClientModel extends UnicastRemoteObject implements RMIObserv
 		cs.notifyObserver4();
 		
 	}
-
+*/
 
 	public void setDirectConversation(DirectConversation directConversation) {
 		this.directconversation=directConversation;
@@ -292,12 +329,44 @@ public class ConcordClientModel extends UnicastRemoteObject implements RMIObserv
 	}
 
 
-	public ObservableList<Message> getdirectconversationmessages(String name) throws RemoteException {
+	public ObservableList<Message> getdirectconversationmessages(String name) throws RemoteException, NullPointerException {
 		ArrayList<Message> messages=cs.getdirectconversationmessages(name);
 		for (int i=0; i<messages.size(); i++) {
 			messagelist.add(messages.get(i));
 		}
 		return messagelist;
+	}
+
+
+	@Override
+	public void notifyFinished(String name)
+			throws RemoteException, AlreadyBoundException, InterruptedException, NotBoundException {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void notifyFinished2(String name)
+			throws RemoteException, AlreadyBoundException, InterruptedException, NotBoundException {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void notifyFinished3(String name)
+			throws RemoteException, AlreadyBoundException, InterruptedException, NotBoundException {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void notifyFinished4()
+			throws RemoteException, AlreadyBoundException, InterruptedException, NotBoundException {
+		cs.notifyObserver4();
+		
 	}
 
 
@@ -309,6 +378,83 @@ public class ConcordClientModel extends UnicastRemoteObject implements RMIObserv
 	}
 
 
+	public DirectConversation Createdcmessage(String message, String name) throws RemoteException {
+		cs.createdcmessage(message, user, name);
+		return null;
+	}
+
+
+	public DirectConversation Createdcmessage(String string, User user3, String dcsname) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	public void Setprofile(String string) throws RemoteException {
+		cs.setprofile(string, user.userName);
+	}
+
+
+	public void Setusername(String usernameLabel) throws RemoteException {
+		cs.setusername(usernameLabel, user.userName);
+	}
+
+
+	public void Setpassword(String passwordLabel) throws RemoteException{
+		cs.setpassword(passwordLabel, user.userName);
+	}
+
+
+	public void Name(String nameLabel) throws RemoteException {
+		cs.setname(nameLabel, user.userName);
+		
+	}
+	
+	public ObservableList<String> getinfo() throws RemoteException, AlreadyBoundException, InterruptedException, NotBoundException {
+			for (int i=0; i<3; i++) {
+				if (i==0) {
+					infolist.add(cs.getusername(user));
+				}
+				if (i==1) {
+					infolist.add(cs.getname(user));
+				}
+				if (i==2) {
+					infolist.add(cs.getprofile(user));
+				}
+			}
+			return infolist;
+		}
+
+
+	@Override
+	public void notifyFinished6()
+			throws RemoteException, AlreadyBoundException, InterruptedException, NotBoundException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	}
+
+
+
+
+/*
+	@Override
+	public void notifyFinished()
+			throws RemoteException, AlreadyBoundException, InterruptedException, NotBoundException {
+		// TODO Auto-generated method stub
+		
+	}*/
+
+/*
+	@Override
+	public void notifyFinished5()
+			throws RemoteException, AlreadyBoundException, InterruptedException, NotBoundException {
+		// TODO Auto-generated method stub
+		
+	}*/
+
+
 
 
 
@@ -318,4 +464,4 @@ public class ConcordClientModel extends UnicastRemoteObject implements RMIObserv
 
 	
 	
-}
+

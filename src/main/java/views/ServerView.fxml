@@ -18,7 +18,7 @@
                   <TextField id="channellabel" fx:id="channelnameLabel" />
                   <Button id="channelbutton" mnemonicParsing="false" onAction="#onClickChannelButton" text="Add" />
                   <Label text="Invite User" />
-                  <TextField id="invitelabel" fx:id="inviteLabel" />
+                  <TextField id="invite" fx:id="inviteLabel" />
                   <Button id="invitebutton" mnemonicParsing="false" onAction="#onClickInviteButton" prefHeight="25.0" prefWidth="59.0" text="Invite" />
                </children>
             </VBox>
@@ -41,9 +41,9 @@
             <HBox prefHeight="32.0" prefWidth="362.0" BorderPane.alignment="CENTER">
                <children>
                   <Button id="backbutton" mnemonicParsing="false" onAction="#onBackButton" text="Back" translateY="5.0" />
-                  <TextField id="messagelabel" fx:id="messageLabel" prefHeight="25.0" prefWidth="125.0" promptText="add message" translateX="50.0" />
-                  <Button id="messagebutton" fx:id="add" mnemonicParsing="false" onAction="#onClickMessageButton" prefHeight="25.0" prefWidth="36.0" text="+" translateX="50.0" />
-                  <Button id="logoutbutton" mnemonicParsing="false" onAction="#onClickLogoutButton" text="Log Out" translateX="60.0" translateY="5.0" />
+                  <Button id="logoutbutton2" maxWidth="-Infinity" mnemonicParsing="false" onAction="#onClickLogoutButton" prefHeight="25.0" prefWidth="70.0" text="Logout" translateY="5.0" />
+                  <TextField id="messagelabel" fx:id="messageLabel" prefHeight="25.0" prefWidth="125.0" promptText="add message" translateX="3.0" />
+                  <Button id="messagebutton" fx:id="add" mnemonicParsing="false" onAction="#onClickMessageButton" prefHeight="25.0" prefWidth="36.0" text="+" translateX="3.0" />
                </children>
             </HBox>
          </bottom></BorderPane>

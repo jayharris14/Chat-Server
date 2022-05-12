@@ -24,9 +24,8 @@
             <VBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="300.0" prefWidth="100.0" BorderPane.alignment="CENTER">
                <children>
                   <Label text="Invites" />
-                  <ListView fx:id="inviteView" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="100.0" prefWidth="150.0" />
-                  <Label text="Blocks" />
-                  <ListView fx:id="blockView" prefHeight="100.0" prefWidth="200.0" />
+                  <ListView fx:id="inviteView" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="184.0" prefWidth="100.0" />
+                  <Button mnemonicParsing="false" onAction="#onClickEditButton" text="Edit Info" translateY="100.0" />
                </children>
             </VBox>
          </right>

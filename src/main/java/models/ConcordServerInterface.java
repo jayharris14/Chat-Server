@@ -49,6 +49,18 @@ public interface ConcordServerInterface extends Remote{
 		public void createdirectconversation(String name, User user) throws RemoteException;
 		public ArrayList<Message> getdirectconversationmessages(String name) throws RemoteException;
 		public void kick(Server server, String name) throws RemoteException, AlreadyBoundException, InterruptedException, NotBoundException;
+		public ArrayList<DirectConversation> getalldirectconversations() throws RemoteException;
+		public void createdirectconversation(String name, String name2) throws RemoteException;
+		public void createdcmessage(String message, User user, String name) throws RemoteException;
+		public ArrayList<User> getdcusers(User user, User user2) throws RemoteException;
+		public void setprofile(String profileLabel, String userName) throws RemoteException;
+		public void setusername(String usernameLabel, String userName) throws RemoteException;
+		public void setpassword(String passwordLabel, String userName) throws RemoteException;
+		public void setname(String nameLabel, String userName) throws RemoteException;
+		public String getprofile(User user) throws RemoteException, AlreadyBoundException, InterruptedException, NotBoundException;
+		public String getusername(User user) throws RemoteException, AlreadyBoundException, InterruptedException, NotBoundException;
+		public String getpassword(User user) throws RemoteException, AlreadyBoundException, InterruptedException, NotBoundException;
+		public String getname(User user) throws RemoteException, AlreadyBoundException, InterruptedException, NotBoundException;
 		
 }
 	

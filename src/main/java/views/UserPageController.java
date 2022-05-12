@@ -43,16 +43,53 @@ public class UserPageController extends UnicastRemoteObject implements RMIObserv
 	        concordmodel=model;
 	  		viewtransitionalmodel=viewTransitionalModel;
 	  		concordmodel.setUser(concordmodel.getUser());
+	  		Platform.runLater(
+	  			  () -> {inviteView.getItems().clear();
 	  		inviteView.getItems().clear();
 	  		inviteView.getItems().clear();
 	  		serverView.getItems().clear();
-	  		serverView.setItems(model.userservers(concordmodel.getUser()));
-	  		inviteView.setItems(model.getinvitedservers(concordmodel.getUser()));
-	  		this.setbuttons();
-	  		this.setserverbuttons();
-	  		RMIObserved observed = (RMIObserved) Naming.lookup("rmi://10.14.1.70:1151/Concord");
-			observed.addObserver(this);
-		}
+	  		try {
+				serverView.setItems(model.userservers(concordmodel.getUser()));
+			} catch (RemoteException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+	  		try {
+	  			inviteView.setItems(model.getinvitedservers(concordmodel.getUser()));
+				
+				} catch (RemoteException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (AlreadyBoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+	  		try {
+				this.setbuttons();
+			} catch (RemoteException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+	  		try {
+				this.setserverbuttons();
+			} catch (RemoteException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+	  		RMIObserved observed=null;
+			try {
+				observed = (RMIObserved) Naming.lookup("rmi://10.14.1.70:1151/Concord");
+			} catch (MalformedURLException | RemoteException | NotBoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			try {
+				observed.addObserver(this);
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	  			  });}
 	
 	 @FXML
 	 private ListView<Button> serverView;
@@ -66,18 +103,45 @@ public class UserPageController extends UnicastRemoteObject implements RMIObserv
 	 @FXML
 	 private TextField servernameLabel;
 	 
+	  @FXML
+	  private ListView<String> userinfoView;
+	 
 	
 	 @FXML
 	 void onClickButton(ActionEvent event) throws RemoteException, AlreadyBoundException, InterruptedException, NotBoundException {
 		 if (servernameLabel.textProperty().get()!="") {
-			 concordmodel.createserver(servernameLabel.textProperty().get());
+			 Platform.runLater(
+					  () -> {try {
+						concordmodel.createserver(servernameLabel.textProperty().get());
+					} catch (RemoteException | AlreadyBoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 			 serverView.getItems().clear();
 			 inviteView.getItems().clear();
-			 viewtransitionalmodel.showUser();
+			 try {
+				viewtransitionalmodel.showUser();
+			} catch (AlreadyBoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (NotBoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
-		 }
+		 });}
 	 }
 	 
+
+	    @FXML
+	    void onClickEditButton(ActionEvent event) throws AlreadyBoundException, InterruptedException, NotBoundException {
+	    	inviteView.getItems().clear();
+	  		serverView.getItems().clear();
+	    	viewtransitionalmodel.showUserInfo();
+	    }
 	 
 
 
@@ -94,9 +158,10 @@ public class UserPageController extends UnicastRemoteObject implements RMIObserv
 		        @Override
 		        public void handle(ActionEvent actionEvent) {
 		        	concordmodel.setServer(Servers.get(ii));
-		            try {
-		            	inviteView.getItems().clear();
-		            	serverView.getItems().clear();
+		            Platform.runLater(
+							  () -> {inviteView.getItems().clear();
+					serverView.getItems().clear();
+					try {
 						viewtransitionalmodel.showServer();
 					} catch (AlreadyBoundException e) {
 						// TODO Auto-generated catch block
@@ -108,6 +173,7 @@ public class UserPageController extends UnicastRemoteObject implements RMIObserv
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+							  });
 
 		        }});
 	    		}
@@ -122,9 +188,11 @@ public class UserPageController extends UnicastRemoteObject implements RMIObserv
 	    		{
 		        @Override
 		        public void handle(ActionEvent actionEvent) {
-		        	concordmodel.setServer(Servers.get(ii));
+		        	Platform.runLater(
+		        			  () -> {concordmodel.setServer(Servers.get(ii));
 		            inviteView.getItems().clear();
 					serverView.getItems().clear();
+		        			  });
 					try {
 						viewtransitionalmodel.showInvitationView();
 					} catch (Exception e) {
@@ -137,37 +205,121 @@ public class UserPageController extends UnicastRemoteObject implements RMIObserv
 	    	}
 	    @FXML
 	    void onClickAcceptButton(ActionEvent event) throws AlreadyBoundException, RemoteException, InterruptedException, NotBoundException {
-	    	inviteView.getItems().clear();
+	    	Platform.runLater(
+	    			  () -> {inviteView.getItems().clear();
 	    	serverView.getItems().clear();
-	    	concordmodel.addMember();
-	    	concordmodel.notifyFinished4();
-	    	viewtransitionalmodel.showUser();
-	    }
+	    	try {
+				concordmodel.addMember();
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (AlreadyBoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (NotBoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	    	try {
+				concordmodel.notifyFinished4();
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (AlreadyBoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (NotBoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	    	try {
+				viewtransitionalmodel.showUser();
+			} catch (AlreadyBoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (NotBoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	    			  }); }
 
 	    @FXML
 	    void onClickDeclineButton(ActionEvent event) throws AlreadyBoundException, InterruptedException, NotBoundException, RemoteException {
-	    	inviteView.getItems().clear();
+	    	Platform.runLater(
+	    			  () -> {inviteView.getItems().clear();
 	    	serverView.getItems().clear();
-	    	concordmodel.removeinvites();
-	    	viewtransitionalmodel.showUser();
-	    }
+	    	try {
+				concordmodel.removeinvites();
+			} catch (RemoteException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+	    	try {
+				viewtransitionalmodel.showUser();
+			} catch (AlreadyBoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (NotBoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	    			  });}
 
 	    @FXML
 	    void onCloseButton(ActionEvent event) throws AlreadyBoundException, InterruptedException, NotBoundException {
-	    	inviteView.getItems().clear();
+	    	Platform.runLater(
+	    			  () -> {inviteView.getItems().clear();
 	    	serverView.getItems().clear();
-	    	viewtransitionalmodel.showUser();
-	    }
+	    	try {
+				viewtransitionalmodel.showUser();
+			} catch (AlreadyBoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (NotBoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	    			  }); }
 
 		@Override
 		public void notifyFinished(String name) throws RemoteException, AlreadyBoundException, InterruptedException, NotBoundException {
 			User user=concordmodel.GetuserbyName(name);
 			System.out.println("the user is"+ user);
-			inviteView.getItems().clear();
-	  		inviteView.setItems(concordmodel.getinvitedservers(user));
-	  		this.setserverbuttons();
+			Platform.runLater(
+					  () -> {inviteView.getItems().clear();
+	  		try {
+				inviteView.setItems(concordmodel.getinvitedservers(user));
+				inviteView.getItems().clear();
+			} catch (RemoteException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (AlreadyBoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+	  		try {
+				this.setserverbuttons();
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
-		}
+					  });}
 		
 		 @FXML
 		    void onClickRefresh(ActionEvent event) throws RemoteException, AlreadyBoundException, InterruptedException, NotBoundException {
@@ -182,9 +334,11 @@ public class UserPageController extends UnicastRemoteObject implements RMIObserv
 		 
 		 @FXML
 		    void onClickLogoutButton(ActionEvent event) throws RemoteException, AlreadyBoundException, InterruptedException, NotBoundException {
-			 inviteView.getItems().clear();	
+			 Platform.runLater(
+					  () -> { inviteView.getItems().clear();	
+			 serverView.getItems().clear();
 			 viewtransitionalmodel.showLogin();
-		    }
+					  });}
 
 
 
@@ -241,6 +395,20 @@ public class UserPageController extends UnicastRemoteObject implements RMIObserv
 			// TODO Auto-generated method stub
 			
 		}
+
+
+		@Override
+		public void notifyFinished6()
+				throws RemoteException, AlreadyBoundException, InterruptedException, NotBoundException {
+			// TODO Auto-generated method stub
+			
+		}
+
+
+	
+
+	
+
 }
 
 

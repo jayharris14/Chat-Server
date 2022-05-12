@@ -56,6 +56,25 @@ implements RMIObserved, ConcordServerInterface, Serializable
 	String check;
 	DirectConversationManager DirectConversationManager=new DirectConversationManager();
 	DirectConversation directconversation;
+	public DirectConversationManager getDirectConversationManager() {
+		return DirectConversationManager;
+	}
+
+
+	public void setDirectConversationManager(DirectConversationManager directConversationManager) {
+		DirectConversationManager = directConversationManager;
+	}
+
+
+	public ArrayList<DirectConversation> getDCM() {
+		return DCM;
+	}
+
+
+	public void setDCM(ArrayList<DirectConversation> dCM) {
+		DCM = dCM;
+	}
+
 	ArrayList<DirectConversation> DCM= new ArrayList<DirectConversation>();
 	Channel channel;
     Role role;
@@ -190,16 +209,31 @@ implements RMIObserved, ConcordServerInterface, Serializable
 		this.visits = visits;
 	}
 	
-	public void createdirectconversation(String name, User user) throws RemoteException{
+	public void createdirectconversation(String name, String name2) throws RemoteException{
 		DirectConversation directconversation=new DirectConversation();
 		User user1=this.getuserbyname(name);
-		User user2=user;
+		User user2=this.getuserbyname(name2);
 		directconversation.users.add(user1);
 		directconversation.users.add(user2);
 		directconversation.setName(user1.userName+user2.userName);
 		this.DirectConversationManager.DCM.add(directconversation);
 		
+		this.storeToDisk();
+		
 	}
+	
+	public void createdcmessage(String message, User user, String name) throws RemoteException{
+		Message newmessage=new Message();
+		newmessage.setContent(message);
+		newmessage.setUser(user);
+		for (int i=0; i<this.DirectConversationManager.DCM.size(); i++) {
+			if (this.DirectConversationManager.DCM.get(i).name.equals(name)) {
+				this.DirectConversationManager.DCM.get(i).messages.add(newmessage);
+			}
+		}
+		this.storeToDisk();
+	}
+	
 	public ArrayList<DirectConversation> getdirectconversations(User user) {
 		ArrayList<DirectConversation> directonversations=new ArrayList<DirectConversation>();
 		for (int j=0; j<this.usermanager.UM.size(); j++) {
@@ -210,7 +244,7 @@ implements RMIObserved, ConcordServerInterface, Serializable
 					}
 				}
 			}
-		}
+		}this.storeToDisk();
 		return directonversations;
 	}
 	
@@ -221,6 +255,7 @@ implements RMIObserved, ConcordServerInterface, Serializable
 				messages=this.DirectConversationManager.DCM.get(i).messages;
 			}
 		}
+		this.storeToDisk();
 		return messages;
 		
 	}
@@ -255,6 +290,7 @@ implements RMIObserved, ConcordServerInterface, Serializable
 				e.printStackTrace();
 			}
 		notifyObservers(name);
+		this.storeToDisk();
 		return a;
 		}
 	
@@ -266,6 +302,7 @@ implements RMIObserved, ConcordServerInterface, Serializable
 				user=this.usermanager.UM.get(j);
 			}
 		}
+		this.storeToDisk();
 		return user;		
 	}
 
@@ -305,9 +342,22 @@ implements RMIObserved, ConcordServerInterface, Serializable
 	public ArrayList<Message> getchannelmessages(Channel channel) throws RemoteException, AlreadyBoundException, InterruptedException, NotBoundException {
 		System.out.println(channel+"helloj");
 		ArrayList<Message> messages=channel.getMessages();
+		this.storeToDisk();
 		return messages;
 	}
 	
+	public ArrayList<User> getdcusers(User user, User user2){
+		String name=user.userName+user2.userName;
+		ArrayList<User> users= new ArrayList<User>();
+		for (int i=0; i<this.DirectConversationManager.DCM.size(); i++) {
+			if (this.DirectConversationManager.DCM.get(i).name.equals(name));
+				for (int j=0; j<this.DirectConversationManager.DCM.get(i).users.size(); j++) {
+					users.add(this.DirectConversationManager.DCM.get(i).users.get(j));
+				}
+		}
+		this.storeToDisk();
+		return users;
+	}
 
 
 	public String deleteChannel(User admin, Channel channel) {
@@ -371,6 +421,15 @@ implements RMIObserved, ConcordServerInterface, Serializable
 		}
 		this.storeToDisk();
 		return run;
+	}
+	
+	public ArrayList<DirectConversation> getalldirectconversations() {
+		ArrayList<DirectConversation> directconversations= new ArrayList<DirectConversation>();
+			for (int i=0; i<this.DirectConversationManager.DCM.size(); i++) {
+				directconversations.add(this.DirectConversationManager.DCM.get(i));
+		}
+			this.storeToDisk();
+			return directconversations;
 	}
 	
 	public String changeRole(Role newrole, User user) {
@@ -856,6 +915,12 @@ implements RMIObserved, ConcordServerInterface, Serializable
 		{
 			o.notifyFinished5();
 		}
+	}
+	public void notifyObservers6() throws RemoteException, AlreadyBoundException, InterruptedException, NotBoundException {
+			for(RMIObserver o: observers)
+			{
+				o.notifyFinished6();
+			}
 		
 	}
 
@@ -910,7 +975,125 @@ implements RMIObserved, ConcordServerInterface, Serializable
 			throws RemoteException, AlreadyBoundException, InterruptedException, NotBoundException {
 		// TODO Auto-generated method stub
 		
-	}}
+	}
+
+
+	@Override
+	public void createdirectconversation(String name, User user) throws RemoteException {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	
+	public void setprofile(String profileLabel, String name) throws RemoteException {
+		for (int i=0; i<this.usermanager.UM.size(); i++) {
+			if (this.usermanager.UM.get(i).userName.equals(name))
+			{this.usermanager.UM.get(i).setProfileData(profileLabel);
+			}}
+		this.storeToDisk();
+		
+	}
+
+
+
+	public void setusername(String usernameLabel, String name) throws RemoteException {
+		for (int i=0; i<this.usermanager.UM.size(); i++) {
+			if (this.usermanager.UM.get(i).userName.equals(name))
+			{this.usermanager.UM.get(i).setUserName(usernameLabel);;
+			}}
+		this.storeToDisk();
+		
+	}
+
+		
+
+
+	public void setpassword(String passwordLabel, String name) throws RemoteException {
+		for (int i=0; i<this.usermanager.UM.size(); i++) {
+			if (this.usermanager.UM.get(i).userName.equals(name))
+			{this.usermanager.UM.get(i).setPassword(passwordLabel);;
+			}}
+		this.storeToDisk();
+	}
+
+		
+
+
+
+	public void setname(String nameLabel, String name) throws RemoteException {
+		for (int i=0; i<this.usermanager.UM.size(); i++) {
+			if (this.usermanager.UM.get(i).userName.equals(name))
+			{this.usermanager.UM.get(i).setRealName(nameLabel);
+			}}
+		this.storeToDisk();
+	}
+
+	@Override
+	public String getprofile(User user) throws RemoteException, AlreadyBoundException, InterruptedException, NotBoundException {
+		String a=null;
+		for (int i=0; i<this.usermanager.UM.size(); i++) {
+			if (this.usermanager.UM.get(i).userName.equals(user.userName))
+			{a=this.usermanager.UM.get(i).getProfileData();
+			}}
+		notifyObservers6();
+		this.storeToDisk();
+		return a;
+		
+	}
+
+
+
+	@Override
+	public String getusername(User user) throws RemoteException, AlreadyBoundException, InterruptedException, NotBoundException {
+		String a= null;
+		for (int i=0; i<this.usermanager.UM.size(); i++) {
+			if (this.usermanager.UM.get(i).userName.equals(user.userName))
+			{a=this.usermanager.UM.get(i).getUserName();;
+			}}
+		notifyObservers6();
+		return a;
+	}
+
+		
+
+
+	@Override
+	public String getpassword(User user) throws RemoteException, AlreadyBoundException, InterruptedException, NotBoundException {
+		String a = null;
+		for (int i=0; i<this.usermanager.UM.size(); i++) {
+			if (this.usermanager.UM.get(i).userName.equals(user.userName))
+			{a=this.usermanager.UM.get(i).getPassword();;
+			}}
+		notifyObservers6();
+		return a;
+	}
+
+		
+
+
+
+	@Override
+	public String getname(User user) throws RemoteException, AlreadyBoundException, InterruptedException, NotBoundException {
+		String a=null;
+		for (int i=0; i<this.usermanager.UM.size(); i++) {
+			if (this.usermanager.UM.get(i).userName.equals(user.userName))
+			{a=this.usermanager.UM.get(i).getRealName();
+			}
+			}
+		notifyObservers6();
+		return a;
+	}
+	
+
+}
+		
+	
+
+		
+	
+
+
 
 
 
