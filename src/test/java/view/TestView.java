@@ -354,20 +354,7 @@ public class TestView implements ViewTransitionModelInterface
 		enterAmt21(robot, "jhoya101");
 		enterAmt22(robot, "map55");
 		logIn1(robot);
-		editinfo(robot);
-		editusername(robot, "misterbunny");
-		editpassword(robot, "dede");
-		editprofile(robot, "I like shopping");
-		submit(robot);
 		logout(robot);
-		enterAmt21(robot, "jhoya101");
-		enterAmt22(robot, "map55");
-		logIn1(robot);
-		enterAmt21(robot, "misterbunny");
-		enterAmt22(robot, "dede");
-		logIn1(robot);
-		logout(robot);
-		
 		
 	}
 	
