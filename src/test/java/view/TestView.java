@@ -68,10 +68,17 @@ public class TestView implements ViewTransitionModelInterface
 	private void enterserver(FxRobot robot, String text) {
 		robot.clickOn("#serverlabel");
 		robot.write(text);
+		Assertions.assertThat("#serverlabel").as("party");
+	}
+	
+	private void enterserver2(FxRobot robot, String text) {
+		robot.clickOn("#serverlabel");
+		robot.write(text);
+		Assertions.assertThat("#serverlabel").as("movies");
 	}
 	
 	
-	private void channel(FxRobot robot) {
+	private void channel1(FxRobot robot) {
 		robot.clickOn(LabeledMatchers.hasText("food"));
 	}
 	
@@ -102,10 +109,41 @@ public class TestView implements ViewTransitionModelInterface
 		robot.clickOn(LabeledMatchers.hasText("favorites"));
 	}
 	
-	private void entermessage(FxRobot robot, String text) {
+	private void entermessage1(FxRobot robot, String text) {
 		robot.clickOn("#messagelabel");
 		robot.write(text);
+		Assertions.assertThat("#messagelabel").as("who's getting what");
+		
 	}
+	private void entermessage2(FxRobot robot, String text) {
+		robot.clickOn("#messagelabel");
+		robot.write(text);
+		Assertions.assertThat("#messagelabel").as("i'll get pizza");
+	}
+	private void entermessage3(FxRobot robot, String text) {
+		robot.clickOn("#messagelabel");
+		robot.write(text);
+		Assertions.assertThat("#messagelabel").as("i'll get waters");
+	}
+	
+	private void entermessage4(FxRobot robot, String text) {
+		robot.clickOn("#messagelabel");
+		robot.write(text);
+		Assertions.assertThat("#messagelabel").as("i can get cookies");
+	}
+	
+	private void entermessage5(FxRobot robot, String text) {
+		robot.clickOn("#messagelabel");
+		robot.write(text);
+		Assertions.assertThat("#messagelabel").as("i'll get sodas");
+	}
+	
+	private void entermessage6(FxRobot robot, String text) {
+		robot.clickOn("#messagelabel");
+		robot.write(text);
+		Assertions.assertThat("#messagelabel").as("snow white's my fav");
+	}
+	
 	
 	private void send(FxRobot robot)
 	{
@@ -119,9 +157,23 @@ public class TestView implements ViewTransitionModelInterface
 	
 	
 	
-	private void enterchannel(FxRobot robot, String text) {
+	private void enterchannel1(FxRobot robot, String text) {
 		robot.clickOn("#channellabel");
 		robot.write(text);
+		Assertions.assertThat("#channellabel").as("food");
+	}
+	
+	private void enterchannel2(FxRobot robot, String text) {
+		robot.clickOn("#channellabel");
+		robot.write(text);
+		Assertions.assertThat("#channellabel").as("drinks");
+		
+	}
+	
+	private void enterchannel3(FxRobot robot, String text) {
+		robot.clickOn("#channellabel");
+		robot.write(text);
+		Assertions.assertThat("#channellabel").as("favorites");
 	}
 	
 	
@@ -139,8 +191,18 @@ public class TestView implements ViewTransitionModelInterface
 	private void enteruser(FxRobot robot, String text) {
 		robot.clickOn("#invite");
 		robot.write(text);
+		Assertions.assertThat("#invite").as("jhoya101");
+		
 	}
-	
+	private void enteruser2(FxRobot robot, String text) {
+		robot.clickOn("#invite");
+		robot.write(text);
+		Assertions.assertThat("#invite").as("wllie1");
+	}private void enteruser3(FxRobot robot, String text) {
+		robot.clickOn("#invite");
+		robot.write(text);
+		Assertions.assertThat("#invite").as("5donald");
+	}
 	
 	private void invitebutton(FxRobot robot)
 	{
@@ -179,11 +241,13 @@ public class TestView implements ViewTransitionModelInterface
 	private void enterAmt1(FxRobot robot, String text) {
 		robot.clickOn("#userNameLabel");
 		robot.write(text);
+		Assertions.assertThat("#userNameLabel").as("jhoya101");
 	}
 
 	private void enterAmt2(FxRobot robot, String text) {
 		robot.clickOn("#passWordLabel");
 		robot.write(text);
+		Assertions.assertThat("#passWordLabel").as("map55");
 	}
 	
 	private void logIn(FxRobot robot) {
@@ -197,6 +261,8 @@ public class TestView implements ViewTransitionModelInterface
 	private void enterAmt10(FxRobot robot, String text) {
 		robot.clickOn("#usernameLabel");
 		robot.write(text);
+		Assertions.assertThat("#usernameLabel").as("jhoya101");
+		
 	}
 	
 	
@@ -204,6 +270,7 @@ public class TestView implements ViewTransitionModelInterface
 	private void enterAmt11(FxRobot robot, String text) {
 		robot.clickOn("#passwordLabel");
 		robot.write(text);
+		Assertions.assertThat("#passWordLabel").as("map55");
 	}
 	
 
@@ -211,6 +278,64 @@ public class TestView implements ViewTransitionModelInterface
 		robot.clickOn("#nameLabel");
 		robot.write(text);
 	}
+	
+	private void enterAmt31(FxRobot robot, String text) {
+		robot.clickOn("#userNameLabel");
+		robot.write(text);
+		Assertions.assertThat("#userNameLabel").as("5donald");
+		
+	}
+	
+
+	private void enterAmt32(FxRobot robot, String text) {
+		robot.clickOn("#passWordLabel");
+		robot.write(text);
+		Assertions.assertThat("#passWordLabel").as("dxxd");
+	}
+	
+	private void enterAmt220(FxRobot robot, String text) {
+		robot.clickOn("#usernameLabel");
+		robot.write(text);
+		Assertions.assertThat("#userameLabel").as("willie1");
+	}
+	
+	
+	
+	private void enterAmt221(FxRobot robot, String text) {
+		robot.clickOn("#passwordLabel");
+		robot.write(text);
+		Assertions.assertThat("#passwordLabel").as("bobo");
+	}
+	
+
+	private void enterAmt222(FxRobot robot, String text) {
+		robot.clickOn("#nameLabel");
+		robot.write(text);
+		Assertions.assertThat("#nameLabel").as("will");
+	}
+	
+	private void enterAmt330(FxRobot robot, String text) {
+		robot.clickOn("#usernameLabel");
+		robot.write(text);
+		Assertions.assertThat("#usernameLabel").as("5donald");
+	}
+	
+	
+	
+	private void enterAmt331(FxRobot robot, String text) {
+		robot.clickOn("#passwordLabel");
+		robot.write(text);
+		Assertions.assertThat("#passwordLabel").as("dxxd");
+	}
+	
+
+	private void enterAmt332(FxRobot robot, String text) {
+		robot.clickOn("#nameLabel");
+		robot.write(text);
+		Assertions.assertThat("#nameLabel").as("Don");
+	}
+	
+	
 	
 
 	private void submit(FxRobot robot) {
@@ -224,12 +349,14 @@ public class TestView implements ViewTransitionModelInterface
 	private void enterAmt21(FxRobot robot, String text) {
 		robot.clickOn("#userNameLabel");
 		robot.write(text);
+		Assertions.assertThat("#userNameLabel").as("willie1");
 	}
 	
 
 	private void enterAmt22(FxRobot robot, String text) {
 		robot.clickOn("#passWordLabel");
 		robot.write(text);
+		Assertions.assertThat("#passWordLabel").as("dxxd");
 	}
 	
 	private void logIn1(FxRobot robot) {
@@ -254,105 +381,151 @@ public class TestView implements ViewTransitionModelInterface
 		enterAmt1(robot, "jhoya101");
 		enterAmt2(robot, "map55");
 		logIn(robot);
+		Thread.sleep(1000);
 		createaccount(robot);
 		enterAmt10(robot, "jhoya101");
 		enterAmt11(robot, "map55");
 		enterAmt12(robot, "jay");
 		submit(robot);
 		createaccount(robot);
-		enterAmt10(robot, "willie1");
-		enterAmt11(robot, "bobo");
-		enterAmt12(robot, "will");
+		enterAmt220(robot, "willie1");
+		enterAmt221(robot, "bobo");
+		enterAmt222(robot, "will");
 		submit(robot);
 		createaccount(robot);
-		enterAmt10(robot, "5donald");
-		enterAmt11(robot, "dxxd");
-		enterAmt12(robot, "Don");
+		enterAmt330(robot, "5donald");
+		enterAmt331(robot, "dxxd");
+		enterAmt332(robot, "Don");
 		submit(robot);
 		enterAmt1(robot, "jhoya101");
 		enterAmt2(robot, "map55");
 		logIn1(robot);
+		Thread.sleep(1000);
 		enterserver(robot, "party");
+		Thread.sleep(500);
 		add(robot);
+		Thread.sleep(1000);
 		serverbutton(robot);
-		enteruser(robot, "willie1");
+		Thread.sleep(1000);
+		enteruser2(robot, "willie1");
+		Thread.sleep(1000);
 		invitebutton(robot);
-		Thread.sleep(2000);
-		enterchannel(robot, "food");
+		Thread.sleep(1000);
+		enterchannel1(robot, "food");
+		Thread.sleep(1000);
 		addchannelbutton(robot);
-		enteruser(robot, "5donald");
+		Thread.sleep(1000);
+		enteruser3(robot, "5donald");
+		Thread.sleep(1000);
 		invitebutton(robot);
+		Thread.sleep(1000);
 		logout2(robot);
 		enterAmt21(robot, "willie1");
 		enterAmt22(robot, "bobo");
 		logIn1(robot);
+		Thread.sleep(1000);
 		invitedserverbutton(robot);
+		Thread.sleep(1000);
 		acceptserverbutton(robot);
+		Thread.sleep(1000);
 		serverbutton(robot);
-		channel(robot);
-		entermessage(robot, "who's getting what");
+		Thread.sleep(1000);
+		channel1(robot);
+		Thread.sleep(1000);
+		entermessage1(robot, "who's getting what");
+		Thread.sleep(1000);
 		send(robot);
+		Thread.sleep(1000);
 		logout2(robot);
-		enterAmt1(robot, "5donald");
-		enterAmt2(robot, "dxxd");
+		enterAmt31(robot, "5donald");
+		enterAmt32(robot, "dxxd");
 		logIn1(robot);
+		Thread.sleep(1000);
 		invitedserverbutton(robot);
+		Thread.sleep(1000);
 		acceptserverbutton(robot);  
+		Thread.sleep(1000);
 		serverbutton(robot);
-		Thread.sleep(2000);
-		channel(robot);
-		entermessage(robot, "i'll get pizza");
+		Thread.sleep(1000);
+		channel1(robot);
+		Thread.sleep(1000);
+		entermessage2(robot, "i'll get pizza");
+		Thread.sleep(1000);
 		send(robot);
-		enterchannel(robot, "drinks");
+		Thread.sleep(1000);
+		enterchannel2(robot, "drinks");
+		Thread.sleep(1000);
 		addchannelbutton(robot);
+		Thread.sleep(1000);
 		channel2(robot);
+		Thread.sleep(1000);
 		clearmessage(robot);
 		clearmessage(robot);
-		entermessage(robot, "i'll get waters");
+		entermessage3(robot, "i'll get waters");
+		Thread.sleep(1000);
 		send(robot);
 		logout2(robot);
-		enterAmt21(robot, "jhoya101");
-		enterAmt22(robot, "map55");
+		enterAmt1(robot, "jhoya101");
+		enterAmt2(robot, "map55");
 		logIn1(robot);
+		Thread.sleep(1000);
 		serverbutton(robot);
-		channel(robot);
-		entermessage(robot, "i can get cookies");
+		Thread.sleep(1000);
+		channel1(robot);
+		Thread.sleep(1000);
+		entermessage4(robot, "i can get cookies");
+		Thread.sleep(1000);
 		send(robot);
+		Thread.sleep(1000);
 		channel2(robot);
+		Thread.sleep(1000);
 		clearmessage(robot);
 		clearmessage(robot);
 		clearmessage(robot);
-		entermessage(robot, "ill get sodas");
+		entermessage5(robot, "ill get sodas");
+		Thread.sleep(1000);
 		send(robot);
+		Thread.sleep(1000);
 		back(robot);
-		enterserver(robot, "movies");
+		Thread.sleep(1000);
+		enterserver2(robot, "movies");
+		Thread.sleep(1000);
 		add(robot);
+		Thread.sleep(1000);
 		secondserver(robot);
-		enteruser(robot, "5donald");
+		Thread.sleep(1000);
+		enteruser3(robot, "5donald");
+		Thread.sleep(1000);
 		invitebutton(robot);
-		Thread.sleep(2000);
-		enterchannel(robot, "favorites");
+		Thread.sleep(1000);
+		enterchannel3(robot, "favorites");
+		Thread.sleep(1000);
 		addchannelbutton(robot);
+		Thread.sleep(1000);
 		channel3(robot);
-		clearmessage(robot);
-		clearmessage(robot);
-		clearmessage(robot);
-		entermessage(robot, "snow whites my fav");
+		Thread.sleep(1000);
+		entermessage6(robot, "snow whites my fav");
+		Thread.sleep(1000);
 		send(robot);
+		Thread.sleep(1000);
 		logout2(robot);
-		enterAmt1(robot, "5donald");
-		enterAmt2(robot, "dxxd");
+		enterAmt21(robot, "5donald");
+		enterAmt22(robot, "dxxd");
 		logIn1(robot);
 		invitedserverbutton2(robot);
+		Thread.sleep(1000);
 		acceptserverbutton(robot);  
-		Thread.sleep(2000);
+		Thread.sleep(1000);
 		secondserver(robot);
+		Thread.sleep(1000);
 		channel3(robot);
-		entermessage(robot, "me too");
+		Thread.sleep(1000);
+		entermessage1(robot, "me too");
+		Thread.sleep(1000);
 		send(robot);
 		logout2(robot);
-		enterAmt21(robot, "jhoya101");
-		enterAmt22(robot, "map55");
+		enterAmt1(robot, "jhoya101");
+		enterAmt2(robot, "map55");
 		logIn1(robot);
 		logout(robot);
 		
