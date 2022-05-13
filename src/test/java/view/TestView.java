@@ -28,6 +28,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import main.Main;
 import models.ConcordClientModel;
+import models.ConcordServer;
 import models.ViewTransitionModelInterface;
 import models.ViewTransitionalModel;
 import views.MainController;
@@ -40,8 +41,10 @@ import views.ServerController;
 public class TestView implements ViewTransitionModelInterface
 {
 	@Start
-	private void start(Stage stage) throws RemoteException {
-
+	private void start(Stage stage) throws RemoteException, AlreadyBoundException {
+		
+		ConcordServer cs=new ConcordServer();
+		cs.main(null);
 		ConcordClientModel concordclientmodel=new ConcordClientModel(1151);
 		ConcordClientModel.main(null);
 		FXMLLoader loader=new FXMLLoader();
@@ -250,6 +253,17 @@ public class TestView implements ViewTransitionModelInterface
 		Assertions.assertThat("#passWordLabel").as("map55");
 	}
 	
+	private void enterAmtf(FxRobot robot, String text) {
+		robot.clickOn("#userNameLabel");
+		robot.write(text);
+		Assertions.assertThat("#userNameLabel").as("jhoya1");
+	}
+
+	private void enterAmtfp(FxRobot robot, String text) {
+		robot.clickOn("#passWordLabel");
+		robot.write(text);
+		Assertions.assertThat("#passWordLabel").as("map5");
+	}
 	private void logIn(FxRobot robot) {
 		robot.clickOn("#loginbutton");
 	}
@@ -380,6 +394,7 @@ public class TestView implements ViewTransitionModelInterface
 	public void test1(FxRobot robot) throws Throwable, RuntimeException, InvocationTargetException {
 		enterAmt1(robot, "jhoya101");
 		enterAmt2(robot, "map55");
+		Thread.sleep(1000);
 		logIn(robot);
 		Thread.sleep(1000);
 		createaccount(robot);
