@@ -61,6 +61,7 @@ public class TestView implements ViewTransitionModelInterface
 		cont.setModel(vm, concordclientmodel);
 		
 		Scene s=new Scene(view);
+		s.getStylesheets().add(getClass().getResource("../views/application.css").toExternalForm());
 		stage.setScene(s);
 		stage.show();
 		
@@ -356,6 +357,10 @@ public class TestView implements ViewTransitionModelInterface
 		robot.clickOn("#submitbutton");
 	}
 	
+	private void leaderboard(FxRobot robot) {
+		robot.clickOn("#leaderboard");
+	}
+	
 	
 	
 
@@ -389,9 +394,44 @@ public class TestView implements ViewTransitionModelInterface
 		robot.clickOn(LabeledMatchers.hasText("Back"));
 	}
 	
+	private void kickuser1(FxRobot robot, String text) {
+		robot.clickOn("#kicklabel");
+		robot.write(text);
+		Assertions.assertThat("#kicklabel").as("jhoya101");
+	}
+	
+	private void kickuser2(FxRobot robot, String text) {
+		robot.clickOn("#kicklabel");
+		robot.write(text);
+		Assertions.assertThat("#kicklabel").as("willie1");
+	}
+	
+	
+	private void kick(FxRobot robot) {
+		robot.clickOn(LabeledMatchers.hasText("Kick"));
+	}
+	
+	private void blockuser(FxRobot robot, String text) {
+		robot.clickOn("#blocklabel");
+		robot.write(text);
+		Assertions.assertThat("#blocklabel").as("jhoya101");
+	}
+	
+	
+	private void block(FxRobot robot) {
+		robot.clickOn(LabeledMatchers.hasText("Block"));
+	}
+	
+
+	
+	
 	@Test
 	@Order(1)
 	public void test1(FxRobot robot) throws Throwable, RuntimeException, InvocationTargetException {
+		enterAmt1(robot, "duno");
+		enterAmt2(robot, "dug");
+		Thread.sleep(1000);
+		logIn(robot);
 		enterAmt1(robot, "jhoya101");
 		enterAmt2(robot, "map55");
 		Thread.sleep(1000);
@@ -438,6 +478,9 @@ public class TestView implements ViewTransitionModelInterface
 		enterAmt21(robot, "willie1");
 		enterAmt22(robot, "bobo");
 		logIn1(robot);
+		leaderboard(robot);
+		Thread.sleep(2000);
+		back(robot);
 		Thread.sleep(1000);
 		invitedserverbutton(robot);
 		Thread.sleep(1000);
@@ -455,6 +498,9 @@ public class TestView implements ViewTransitionModelInterface
 		enterAmt31(robot, "5donald");
 		enterAmt32(robot, "dxxd");
 		logIn1(robot);
+		leaderboard(robot);
+		Thread.sleep(2000);
+		back(robot);
 		Thread.sleep(1000);
 		invitedserverbutton(robot);
 		Thread.sleep(1000);
@@ -462,6 +508,9 @@ public class TestView implements ViewTransitionModelInterface
 		Thread.sleep(1000);
 		serverbutton(robot);
 		Thread.sleep(1000);
+		kickuser1(robot, "jhoya101");
+		kick(robot);
+		Thread.sleep(2000);
 		channel1(robot);
 		Thread.sleep(1000);
 		entermessage2(robot, "i'll get pizza");
@@ -485,6 +534,8 @@ public class TestView implements ViewTransitionModelInterface
 		logIn1(robot);
 		Thread.sleep(1000);
 		serverbutton(robot);
+		kickuser2(robot, "willie1");
+		kick(robot);
 		Thread.sleep(1000);
 		channel1(robot);
 		Thread.sleep(1000);
@@ -507,6 +558,10 @@ public class TestView implements ViewTransitionModelInterface
 		Thread.sleep(1000);
 		add(robot);
 		Thread.sleep(1000);
+		leaderboard(robot);
+		Thread.sleep(2000);
+		back(robot);
+		Thread.sleep(1000);
 		secondserver(robot);
 		Thread.sleep(1000);
 		enteruser3(robot, "5donald");
@@ -524,6 +579,11 @@ public class TestView implements ViewTransitionModelInterface
 		send(robot);
 		Thread.sleep(1000);
 		logout2(robot);
+		enterAmt21(robot, "willie1");
+		enterAmt22(robot, "bobo");
+		logIn1(robot);
+		Thread.sleep(2000);
+		logout(robot);
 		enterAmt21(robot, "5donald");
 		enterAmt22(robot, "dxxd");
 		logIn1(robot);
@@ -539,10 +599,42 @@ public class TestView implements ViewTransitionModelInterface
 		Thread.sleep(1000);
 		send(robot);
 		logout2(robot);
+		enterAmt21(robot, "willie1");
+		enterAmt22(robot, "bobo");
+		logIn1(robot);
+		blockuser(robot, "jhoya101");
+		block(robot);
+		logout(robot);
 		enterAmt1(robot, "jhoya101");
 		enterAmt2(robot, "map55");
 		logIn1(robot);
+		secondserver(robot);
+		enteruser3(robot, "willie1");
+		Thread.sleep(1000);
+		invitebutton(robot);
+		Thread.sleep(2000);
+		back(robot);
 		logout(robot);
+		enterAmt21(robot, "willie1");
+		enterAmt22(robot, "bobo");
+		logIn1(robot);
+		editinfo(robot);
+		editusername(robot, "pepper");
+		editpassword(robot, "llm");
+		editprofile(robot, "i like surfing");
+		editname(robot, "Dom");
+		submit(robot);
+		Thread.sleep(2000);
+		logout(robot);
+		enterAmt21(robot, "pepper");
+		enterAmt22(robot, "llm");
+		logIn1(robot);
+		Thread.sleep(2000);
+		logout(robot);
+		
+		
+		
+		
 		
 	}
 	
@@ -608,6 +700,12 @@ public class TestView implements ViewTransitionModelInterface
 
 	@Override
 	public void showUserInfo() throws AlreadyBoundException, InterruptedException, NotBoundException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void showLeaderBoard() throws AlreadyBoundException, InterruptedException, NotBoundException {
 		// TODO Auto-generated method stub
 		
 	}

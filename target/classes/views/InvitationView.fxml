@@ -8,13 +8,13 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.UserPageController">
+<BorderPane id="invitebackground" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.UserPageController">
    <center>
       <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="388.0" prefWidth="362.0" BorderPane.alignment="CENTER">
          <left>
             <VBox maxHeight="-Infinity" prefHeight="280.0" prefWidth="100.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label text="Servers" />
+                  <Label id="ser" text="Servers" />
                   <ListView fx:id="serverView" maxHeight="-Infinity" onMouseClicked="#onClickButton" prefHeight="250.0" prefWidth="200.0" />
                   <Label text="Create Server" />
                   <TextField fx:id="servernameLabel" />
@@ -35,9 +35,9 @@
          <center>
             <Pane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="105.0" prefWidth="162.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button layoutX="14.0" layoutY="40.0" mnemonicParsing="false" onAction="#onClickAcceptButton" text="Accept" />
-                  <Button layoutX="86.0" layoutY="40.0" mnemonicParsing="false" onAction="#onClickDeclineButton" text="Decline" />
-                  <Button layoutX="109.0" layoutY="2.0" mnemonicParsing="false" onAction="#onCloseButton" prefHeight="25.0" prefWidth="21.0" text="X" textFill="#f20606">
+                  <Button id="acceptbutton" layoutX="14.0" layoutY="40.0" mnemonicParsing="false" onAction="#onClickAcceptButton" text="Accept" />
+                  <Button id="declinebutton" layoutX="86.0" layoutY="40.0" mnemonicParsing="false" onAction="#onClickDeclineButton" text="Decline" />
+                  <Button id="closebutton" layoutX="109.0" layoutY="2.0" mnemonicParsing="false" onAction="#onCloseButton" prefHeight="25.0" prefWidth="21.0" text="X" textFill="#f20606">
                      <font>
                         <Font size="9.0" />
                      </font>

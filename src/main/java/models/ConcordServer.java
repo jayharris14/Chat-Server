@@ -17,7 +17,9 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -44,6 +46,11 @@ implements RMIObserved, ConcordServerInterface, Serializable
 	ArrayList<User> UM;
 	ArrayList<Server> SM;
 	ArrayList<Integer> userids;
+	int totalpoints;
+	User admin;
+	ArrayList<User> leaders;
+	Date date;
+	Timestamp lastlogin;
 	public static int getPort() {
 		return port;
 	}
@@ -52,7 +59,8 @@ implements RMIObserved, ConcordServerInterface, Serializable
 	public static void setPort(int port) {
 		ConcordServer.port = port;
 	}
-
+	
+	ArrayList<User> blocks;
 	String check;
 	DirectConversationManager DirectConversationManager=new DirectConversationManager();
 	DirectConversation directconversation;
@@ -85,6 +93,38 @@ implements RMIObserved, ConcordServerInterface, Serializable
 	ArrayList<Channel> channels;
 	ArrayList<Server> invites=new ArrayList<Server>();
 	
+	public Timestamp getlastuserlogin(String u) throws RemoteException {
+		Timestamp timestamp=null;
+		if(this.usermanager!=null) {
+		for (int i=0; i<this.usermanager.UM.size(); i++) {
+			if (this.usermanager.UM.get(i).userName.equals(u)) {
+				timestamp=this.usermanager.UM.get(i).getLastlogin();
+			}
+		}}
+		this.storeToDisk();
+		return timestamp;
+		
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+
+	public Timestamp getLastlogin() {
+		return lastlogin;
+	}
+
+
+	public void setLastlogin(Timestamp lastlogin) {
+		this.lastlogin = lastlogin;
+	}
+
 
 	public ArrayList<Server> getInvites() {
 		return invites;
@@ -147,7 +187,7 @@ implements RMIObserved, ConcordServerInterface, Serializable
 			}
 		}
 		if (check.equals("yes")){
-			if (diskf2.usermanager.UM.get(d).password.equals(pw)) {
+			if (this.usermanager.UM.get(d).password.equals(pw)) {
 				c="permission granted";
 			}
 				
@@ -160,9 +200,19 @@ implements RMIObserved, ConcordServerInterface, Serializable
 		else {
 			c="Access Denied";
 		}
-		this.concordserver=diskf2;
 		this.storeToDisk();
 		return c;
+	}
+	
+	public void setthelastlogin(User user) throws RemoteException{
+		for (int i=0; i<this.usermanager.UM.size(); i++) {
+			if (this.usermanager.UM.get(i).userName.equals(user.userName)) {
+				date = new Date();
+				lastlogin = new Timestamp(date.getTime());
+				this.usermanager.UM.get(i).setLastlogin(lastlogin);
+			}
+		}
+		this.storeToDisk();
 	}
 	
 	public Channel getChannel() {
@@ -273,22 +323,36 @@ implements RMIObserved, ConcordServerInterface, Serializable
 	
 	public Integer SendInvite(User user, String name, Server server) throws RemoteException, AlreadyBoundException, InterruptedException, NotBoundException {
 		int a=0;
-		for (int i=0; i<this.servermanager.SM.size(); i++)
+		int m=0;
+		for (int i=0; i<this.servermanager.SM.size(); i++) {
 			try {
 				{
-					if (this.servermanager.SM.get(i).name.equals(server.name))
+					if (this.servermanager.SM.get(i).name.equals(server.name)) {
 						for (int j=0; j<this.usermanager.UM.size(); j++) {
 							if (this.usermanager.UM.get(j).userName.equals(name)) {
-								this.usermanager.UM.get(j).invites.add(server);
-								a=this.usermanager.UM.get(j).id;
+								for (int c=0; c<this.usermanager.UM.get(j).Blocks.size(); c++) {
+								if (this.usermanager.UM.get(j).Blocks.get(c).userName.equals(user.userName)){
+									m=1;
+									
+								}}
+								if (m!=1){
+									for (int k=0; k<this.servermanager.SM.get(i).users1.size(); k++) {
+										for (int d=0; d<this.servermanager.SM.get(i).users1.get(k).getBlocks().size(); d++) {
+										if (this.servermanager.SM.get(i).users1.get(k).Blocks.get(d).userName.equals(user.userName)) {
+											m=1;
+										}}}}
+								if (m!=1) {
+									this.usermanager.UM.get(j).invites.add(server);
+									a=this.usermanager.UM.get(j).id;}
+								
 					}
 					
 				}
-				}
-			} catch (Exception e) {
+						}}} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
+						}
+		}
 		notifyObservers(name);
 		this.storeToDisk();
 		return a;
@@ -307,20 +371,32 @@ implements RMIObserved, ConcordServerInterface, Serializable
 	}
 
 	
-	public void kick(Server server, String name) throws RemoteException, AlreadyBoundException, InterruptedException, NotBoundException {
+	public void kick(Server server, String name, User user) throws RemoteException, AlreadyBoundException, InterruptedException, NotBoundException {
+		User checkadmin = null;
+		for (int a=0; a<this.usermanager.UM.size(); a++) {
+			if (this.usermanager.UM.get(a).equals(user.userName)){
+				checkadmin=this.usermanager.UM.get(a);
+			}
+		}
 		for (int i=0; i<this.servermanager.SM.size(); i++) {
-					if (this.servermanager.SM.get(i).name.equals(server.name))
+					if (this.servermanager.SM.get(i).name.equals(server.name)) {
 						for (int j=0; j<this.usermanager.UM.size(); j++) {
-							if (this.usermanager.UM.get(j).userName.equals(name)) 
-								this.servermanager.SM.get(i).server.remove(this.usermanager.UM.get(j));
-								this.servermanager.SM.get(i).users.remove(this.usermanager.UM.get(j));
-								this.servermanager.SM.get(i).users1.remove(this.usermanager.UM.get(j));
+							if (this.usermanager.UM.get(j).userName.equals(name)) {
+								if(this.servermanager.SM.get(i).getAdmin().userName.equals(user.userName)) {
+									this.servermanager.SM.get(i).server.remove(this.usermanager.UM.get(j));
+									this.servermanager.SM.get(i).userids1.remove(user.id);
+									this.servermanager.SM.get(i).users1.remove(user.id);
+								}
+								
+							
 		
 	
 								
 	
-	}}
+	}}}}
 		notifyObservers5();}
+	
+	
 	
 	public Channel addChannel(User admin, String name, Server server) throws RemoteException, AlreadyBoundException, InterruptedException, NotBoundException{
 		if (check=="yes") {
@@ -442,6 +518,15 @@ implements RMIObserved, ConcordServerInterface, Serializable
 		}
 		this.storeToDisk();
 		return run;
+	}
+	
+	public void addblock(String blockname, String username) {
+		for (int i=0; i<this.usermanager.UM.size(); i++) {
+			if (this.usermanager.UM.get(i).userName.equals(username)) {
+				User user1=this.getuserbyname(blockname);
+				this.usermanager.UM.get(i).Blocks.add(user1);
+			}
+		}this.storeToDisk();
 	}
 	
 	
@@ -663,16 +748,18 @@ implements RMIObserved, ConcordServerInterface, Serializable
 	
 	public void CreateUser(String realname, String username, String password) throws RemoteException, AlreadyBoundException{
 		ConcordServer diskf2=this.ReadFromDisk();
+		blocks=new ArrayList<User>();
+		totalpoints=0;
 		if (diskf2!=null)
 		{
 		if (diskf2.usermanager==null) {
 		ArrayList<User> UM=new ArrayList<User>();
 		this.usermanager=new UserManager(UM);
-		user=new User(null, username, null, realname, this.setuserid(), null, null, password);
+		user=new User(null, username, null, realname, this.setuserid(), blocks, null, password, totalpoints, null);
 		this.usermanager.UM=usermanager.addUser(user);
 		}
 		else {
-		user=new User(null, username, null, realname, this.setuserid(), null, null, password);
+		user=new User(null, username, null, realname, this.setuserid(), blocks, null, password, totalpoints, null);
 		this.UM=diskf2.usermanager.UM;
 		this.usermanager=diskf2.usermanager;
 		this.usermanager.UM=usermanager.addUser(user);
@@ -680,17 +767,17 @@ implements RMIObserved, ConcordServerInterface, Serializable
 		if (diskf2==null){
 			ArrayList<User> UM=new ArrayList<User>();
 			this.usermanager=new UserManager(UM);
-			user=new User(null, username, null, realname, this.setuserid(), null, null, password);
+			user=new User(null, username, null, realname, this.setuserid(), blocks, null, password, totalpoints, null);
 			this.usermanager.UM=this.usermanager.addUser(user);
 			
 		}
 		this.storeToDisk();
 	}
 
-	public void CreateMessage(User user, Server server, Channel channel, String message) throws RemoteException, AlreadyBoundException, InterruptedException, NotBoundException {
+	public void CreateMessage(User user1, Server server, Channel channel, String message) throws RemoteException, AlreadyBoundException, InterruptedException, NotBoundException {
 		Message newmessage=new Message();
 		newmessage.setContent(message);
-		newmessage.setUser(user);
+		newmessage.setUser(user1);
 		for (int i=0; i<this.servermanager.SM.size(); i++) {
 			if (this.servermanager.SM.get(i).name.equals(server.name)) {
 				for (int j=0; j<this.servermanager.SM.get(i).channels.size(); j++) {
@@ -756,6 +843,7 @@ implements RMIObserved, ConcordServerInterface, Serializable
 	public void setUserids(ArrayList<Integer> userids) {
 		this.userids = userids;
 	}
+	
 
 
 	public Server CreateServer(String name, User user) throws RemoteException, AlreadyBoundException {
@@ -775,16 +863,19 @@ implements RMIObserved, ConcordServerInterface, Serializable
 			setRoleBuilder(user, role);
 			this.userids=this.server.addMember(user);
 			this.servermanager.addServer(this.server);
+			this.servermanager.SM.get(this.servermanager.SM.size()-1).setAdmin(user);
 			}
 			else {
 			HashMap<User, Role> users=new HashMap<User, Role>();
 			server=new Server(users, channels, null, name, user, rolebuilder, userids);
 			setRoleBuilder(user, role);
+			this.server.admin=user;
 			this.servermanager=diskf2.servermanager;
 			this.servermanager.SM=diskf2.servermanager.SM;
 			this.userids=this.server.addMember(user);
 			this.servermanager=diskf2.servermanager;
 			this.servermanager.SM=this.servermanager.addServer(this.server);
+			this.servermanager.SM.get(this.servermanager.SM.size()-1).setAdmin(user);
 			}}
 			else {
 				HashMap<User, Role> users=new HashMap<User, Role>();
@@ -792,8 +883,10 @@ implements RMIObserved, ConcordServerInterface, Serializable
 				this.servermanager=new ServerManager(SM);
 				server=new Server(users, channels, null, name, user, rolebuilder, userids);
 				setRoleBuilder(user, role);
+				this.server.admin=user;
 				this.userids=this.server.addMember(user);
 				this.servermanager.addServer(this.server);
+				this.servermanager.SM.get(this.servermanager.SM.size()-1).setAdmin(user);
 				
 			
 			
@@ -960,6 +1053,18 @@ implements RMIObserved, ConcordServerInterface, Serializable
 
 
 	}}
+	
+	public ArrayList<User> getuserblocks(String username) throws RemoteException {
+		ArrayList<User> blocks= new ArrayList<User>();
+		for (int i=0; i<this.usermanager.UM.size(); i++) {
+			if (this.usermanager.UM.get(i).userName.equals(username)) {
+				for (int j=0; j<this.usermanager.UM.get(i).Blocks.size(); j++) {
+				blocks.add(this.usermanager.UM.get(i).Blocks.get(j));}
+				
+			}
+		}
+		return blocks;
+	}
 
 
 	@Override
@@ -976,7 +1081,7 @@ implements RMIObserved, ConcordServerInterface, Serializable
 		// TODO Auto-generated method stub
 		
 	}
-
+	
 
 	@Override
 	public void createdirectconversation(String name, User user) throws RemoteException {
@@ -986,9 +1091,9 @@ implements RMIObserved, ConcordServerInterface, Serializable
 
 
 	
-	public void setprofile(String profileLabel, String name) throws RemoteException {
+	public void setprofile(String profileLabel, int id) throws RemoteException {
 		for (int i=0; i<this.usermanager.UM.size(); i++) {
-			if (this.usermanager.UM.get(i).userName.equals(name))
+			if (this.usermanager.UM.get(i).id==id)
 			{this.usermanager.UM.get(i).setProfileData(profileLabel);
 			}}
 		this.storeToDisk();
@@ -997,9 +1102,9 @@ implements RMIObserved, ConcordServerInterface, Serializable
 
 
 
-	public void setusername(String usernameLabel, String name) throws RemoteException {
+	public void setusername(String usernameLabel, int id) throws RemoteException {
 		for (int i=0; i<this.usermanager.UM.size(); i++) {
-			if (this.usermanager.UM.get(i).userName.equals(name))
+			if (this.usermanager.UM.get(i).id==id)
 			{this.usermanager.UM.get(i).setUserName(usernameLabel);;
 			}}
 		this.storeToDisk();
@@ -1009,9 +1114,9 @@ implements RMIObserved, ConcordServerInterface, Serializable
 		
 
 
-	public void setpassword(String passwordLabel, String name) throws RemoteException {
+	public void setpassword(String passwordLabel, int id) throws RemoteException {
 		for (int i=0; i<this.usermanager.UM.size(); i++) {
-			if (this.usermanager.UM.get(i).userName.equals(name))
+			if (this.usermanager.UM.get(i).id==id)
 			{this.usermanager.UM.get(i).setPassword(passwordLabel);;
 			}}
 		this.storeToDisk();
@@ -1021,9 +1126,9 @@ implements RMIObserved, ConcordServerInterface, Serializable
 
 
 
-	public void setname(String nameLabel, String name) throws RemoteException {
+	public void setname(String nameLabel, int id) throws RemoteException {
 		for (int i=0; i<this.usermanager.UM.size(); i++) {
-			if (this.usermanager.UM.get(i).userName.equals(name))
+			if (this.usermanager.UM.get(i).id==id)
 			{this.usermanager.UM.get(i).setRealName(nameLabel);
 			}}
 		this.storeToDisk();
@@ -1033,7 +1138,7 @@ implements RMIObserved, ConcordServerInterface, Serializable
 	public String getprofile(User user) throws RemoteException, AlreadyBoundException, InterruptedException, NotBoundException {
 		String a=null;
 		for (int i=0; i<this.usermanager.UM.size(); i++) {
-			if (this.usermanager.UM.get(i).userName.equals(user.userName))
+			if (this.usermanager.UM.get(i).id==user.id);
 			{a=this.usermanager.UM.get(i).getProfileData();
 			}}
 		notifyObservers6();
@@ -1048,7 +1153,7 @@ implements RMIObserved, ConcordServerInterface, Serializable
 	public String getusername(User user) throws RemoteException, AlreadyBoundException, InterruptedException, NotBoundException {
 		String a= null;
 		for (int i=0; i<this.usermanager.UM.size(); i++) {
-			if (this.usermanager.UM.get(i).userName.equals(user.userName))
+			if (this.usermanager.UM.get(i).id==user.id)
 			{a=this.usermanager.UM.get(i).getUserName();;
 			}}
 		notifyObservers6();
@@ -1062,28 +1167,90 @@ implements RMIObserved, ConcordServerInterface, Serializable
 	public String getpassword(User user) throws RemoteException, AlreadyBoundException, InterruptedException, NotBoundException {
 		String a = null;
 		for (int i=0; i<this.usermanager.UM.size(); i++) {
-			if (this.usermanager.UM.get(i).userName.equals(user.userName))
+			if (this.usermanager.UM.get(i).id==user.id)
 			{a=this.usermanager.UM.get(i).getPassword();;
 			}}
 		notifyObservers6();
 		return a;
 	}
 
+	public void addpoints(Points points, User user) throws RemoteException{
+		for (int i=0; i<this.usermanager.UM.size(); i++) {
+			if (this.usermanager.UM.get(i).id==user.id) {
+				int currentpoints=(this.usermanager.UM.get(i).totalpoints)+points.total();
+				this.usermanager.UM.get(i).setTotalpoints(currentpoints);
+			}
+			}this.storeToDisk();
+	}
 		
 
+
+
+	public int getTotalpoints() {
+		return totalpoints;
+	}
+
+
+	public void setTotalpoints(int totalpoints) {
+		this.totalpoints = totalpoints;
+	}
 
 
 	@Override
 	public String getname(User user) throws RemoteException, AlreadyBoundException, InterruptedException, NotBoundException {
 		String a=null;
 		for (int i=0; i<this.usermanager.UM.size(); i++) {
-			if (this.usermanager.UM.get(i).userName.equals(user.userName))
+			if (this.usermanager.UM.get(i).id==user.id)
 			{a=this.usermanager.UM.get(i).getRealName();
 			}
 			}
 		notifyObservers6();
 		return a;
 	}
+
+
+	@Override
+	public String gettotalpoints(User user) throws RemoteException, AlreadyBoundException, InterruptedException, NotBoundException {
+		int a=0;
+		for (int i=0; i<this.usermanager.UM.size(); i++) {
+			if (this.usermanager.UM.get(i).id==user.id)
+			{a=this.usermanager.UM.get(i).getTotalpoints();
+			}
+			}
+		notifyObservers6();
+		String b=Integer.toString(a);
+		return b;
+		
+	}
+	
+	public ArrayList<User> sortleaderboard() throws RemoteException{
+		ArrayList<User> leaders=new ArrayList<User>();
+		int max=-1;
+		User maxuser=null;
+		System.out.println(this.usermanager.UM.size());
+		for (int i=0; i<this.usermanager.UM.size(); i++) {
+			if (this.usermanager.UM.get(i).getTotalpoints()>=max) {
+				leaders.add(this.usermanager.UM.get(i));
+				max=this.usermanager.UM.get(i).getTotalpoints();
+				maxuser=this.usermanager.UM.get(i);
+			}
+			else {
+				int c=leaders.size();
+				for (int j=0; j<c; j++) {
+					if (c==1) {
+						leaders.add(0, this.usermanager.UM.get(i));
+					}
+					else if (this.usermanager.UM.get(i).getTotalpoints()<=leaders.get(j).getTotalpoints()) {
+						leaders.add(j, this.usermanager.UM.get(i));
+					}
+				}
+			}
+		}
+		this.storeToDisk();
+		return leaders;
+	}
+	
+	
 	
 
 }

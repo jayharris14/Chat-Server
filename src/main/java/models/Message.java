@@ -6,7 +6,7 @@ public class Message implements Serializable
 {
 	@Override
 	public String toString() {
-		return User.userName +":" + content;
+		return this.User.userName +":" + content;
 	}
 	User User;
 	String content;

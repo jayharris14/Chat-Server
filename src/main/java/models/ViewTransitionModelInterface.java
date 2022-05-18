@@ -14,5 +14,6 @@ public interface ViewTransitionModelInterface
 	public void showServer() throws AlreadyBoundException, NotBoundException, InterruptedException;
 	public void showDirectConversation() throws AlreadyBoundException, InterruptedException, NotBoundException;
 	public void showUserInfo() throws AlreadyBoundException, InterruptedException, NotBoundException;
+	public void showLeaderBoard() throws AlreadyBoundException, InterruptedException, NotBoundException;
 }
 

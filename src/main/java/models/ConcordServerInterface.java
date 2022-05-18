@@ -4,6 +4,7 @@ import java.rmi.AlreadyBoundException;
 import java.rmi.NotBoundException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -48,19 +49,26 @@ public interface ConcordServerInterface extends Remote{
 		public ArrayList<DirectConversation> getdirectconversations(User user)throws RemoteException;
 		public void createdirectconversation(String name, User user) throws RemoteException;
 		public ArrayList<Message> getdirectconversationmessages(String name) throws RemoteException;
-		public void kick(Server server, String name) throws RemoteException, AlreadyBoundException, InterruptedException, NotBoundException;
+		public void kick(Server server, String name, User user) throws RemoteException, AlreadyBoundException, InterruptedException, NotBoundException;
 		public ArrayList<DirectConversation> getalldirectconversations() throws RemoteException;
 		public void createdirectconversation(String name, String name2) throws RemoteException;
 		public void createdcmessage(String message, User user, String name) throws RemoteException;
 		public ArrayList<User> getdcusers(User user, User user2) throws RemoteException;
-		public void setprofile(String profileLabel, String userName) throws RemoteException;
-		public void setusername(String usernameLabel, String userName) throws RemoteException;
-		public void setpassword(String passwordLabel, String userName) throws RemoteException;
-		public void setname(String nameLabel, String userName) throws RemoteException;
+		public void setprofile(String profileLabel, int id) throws RemoteException;
+		public void setusername(String usernameLabel, int id) throws RemoteException;
+		public void setpassword(String passwordLabel, int id) throws RemoteException;
+		public void setname(String nameLabel, int id) throws RemoteException;
 		public String getprofile(User user) throws RemoteException, AlreadyBoundException, InterruptedException, NotBoundException;
 		public String getusername(User user) throws RemoteException, AlreadyBoundException, InterruptedException, NotBoundException;
 		public String getpassword(User user) throws RemoteException, AlreadyBoundException, InterruptedException, NotBoundException;
 		public String getname(User user) throws RemoteException, AlreadyBoundException, InterruptedException, NotBoundException;
+		public void addblock(String blockname, String userName) throws RemoteException;
+		public ArrayList<User> getuserblocks(String userName) throws RemoteException;
+		public void addpoints(Points points, User user) throws RemoteException;
+		public String gettotalpoints(User user) throws RemoteException, AlreadyBoundException, InterruptedException, NotBoundException;
+		public ArrayList<User> sortleaderboard() throws RemoteException;
+		public Timestamp getlastuserlogin(String u) throws RemoteException;
+		public void setthelastlogin(User user) throws RemoteException;
 		
 }
 	

@@ -125,17 +125,18 @@ public class Server implements Serializable
 	
 	public String kick(User admin, User user) {
 		String w="";
+		System.out.println("timothy gregor");
 		if (admin.roles.get(this).removeMember==true) {
-		String a=user.userName;
-		String b=name;
+			System.out.println("timothy gregor");
 		this.removeMember(user);
-		w=a+ "kicked from"+ b;
-		}
-		else {
-			w="permission denied";
 		}
 		return w;
 		
+	}
+	public void removeMember(User user) {
+		this.server.remove(user);
+		this.userids1.remove(user.id);
+		this.users1.remove(user);
 	}
 	
 	public ArrayList<Channel> addChannel(User admin, Channel channel) {
@@ -194,12 +195,7 @@ public class Server implements Serializable
 		return userids1;
 	}
 	
-	public void removeMember(User user) {
-		this.server.remove(user);
-		this.userids1.remove(user.id);
-		this.users1.remove(user);
-	}
-	
+
 	public void changeRole(Role newrole, User user) {
 		server.put(user, newrole);
 	}

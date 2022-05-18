@@ -44,6 +44,7 @@ public class ServerController extends UnicastRemoteObject implements RMIObserver
 				  () -> {channelView.getItems().clear();
     	userView.getItems().clear();
     	concordclientmodel.setChannel(null);
+    	concordclientmodel.setUser(concordclientmodel.getUser());
     	channelView.getItems().clear();
     	concordclientmodel.setChannel(concordclientmodel.getChannel());
 		try {
@@ -420,9 +421,24 @@ public class ServerController extends UnicastRemoteObject implements RMIObserver
 	    @FXML
 	    void onClickKickButton(ActionEvent event) throws RemoteException, AlreadyBoundException, InterruptedException, NotBoundException {
 	    	if (kickLabel.textProperty().get()!="") {
-	   			concordclientmodel.kickuser(kickLabel.textProperty().get());
 	   			Platform.runLater(
-	   				  () -> {channelView.getItems().clear();
+	   				  () -> {
+	   					try {
+							concordclientmodel.kickuser(kickLabel.textProperty().get());
+						} catch (RemoteException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						} catch (AlreadyBoundException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						} catch (InterruptedException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						} catch (NotBoundException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+	   					channelView.getItems().clear();
 		    	messageView.getItems().clear();
 		    	userView.getItems().clear();
 	   			try {
@@ -560,18 +576,7 @@ public class ServerController extends UnicastRemoteObject implements RMIObserver
 					  () -> {channelView.getItems().clear();
 	    	messageView.getItems().clear();
 	    	userView.getItems().clear();
-   			try {
-				model.showServer();
-			} catch (AlreadyBoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (NotBoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}});
+   			});
 			
 		}
 		

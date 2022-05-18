@@ -9,7 +9,9 @@ import java.rmi.*;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -44,9 +46,12 @@ public class ConcordClientModel extends UnicastRemoteObject implements RMIObserv
 	ObservableList<Button> userlist= FXCollections.observableArrayList();
 	ObservableList<Button> dcuserlist= FXCollections.observableArrayList();
 	ObservableList<String> infolist= FXCollections.observableArrayList();
+	ObservableList<String> leaderboardlist= FXCollections.observableArrayList();
+	ObservableList<User> blocklist= FXCollections.observableArrayList();
 	Role role=new Role();
 	Channel channel=new Channel();
 	DirectConversation directconversation;
+	Points points;
 	private static final long serialVersionUID= -2;
 	
 	public ConcordClientModel(int port) throws RemoteException {
@@ -85,17 +90,33 @@ public class ConcordClientModel extends UnicastRemoteObject implements RMIObserv
 	}
 	public String verified(String u, String pw) throws RemoteException, MalformedURLException, NotBoundException{
 		String iverify=cs.verify(u, pw);
+		Timestamp lastlogin=cs.getlastuserlogin(u);
 		if (iverify.equals("permission granted")) {
-			this.user=cs.getuserbyname(u);
+			this.setUser(cs.getuserbyname(u));
+			cs.setthelastlogin(user);
 			RMIObserved observed = (RMIObserved) Naming.lookup("rmi://10.14.1.70:1151/Concord");
 			observed.addObserver(this);
+			Date date = new Date();
+			Timestamp current = new Timestamp(date.getTime());
+			if (lastlogin==null) {
+				points=new FirstLogin();
+				cs.addpoints(points, user);
+			}
+			else if (current.getDate()==lastlogin.getDate()) {
+				points=new Return();
+				cs.addpoints(points, user);
+			}
+			else {
+			points=new LogIn();
+			cs.addpoints(points, user);
+			}
 		}
 		return iverify;
 	}
 	
 	public User GetuserbyName(String name) throws RemoteException {
-		user=cs.getuserbyname(name);
-		return user;
+		User tempuser=cs.getuserbyname(name);
+		return tempuser;
 	}
 	
 	public Server GetserverbyName(String name) throws RemoteException {
@@ -115,8 +136,14 @@ public class ConcordClientModel extends UnicastRemoteObject implements RMIObserv
 
 	public void createserver(String name) throws RemoteException, AlreadyBoundException {
 		Server newserver=cs.CreateServer(name, user);
+		points=new CreateServer(points);
 		
 		
+	}
+	
+	public void blockuser(String blockname) throws RemoteException{
+		String name=this.user.userName;
+		cs.addblock(blockname, name);
 	}
 
 	public ObservableList<javafx.scene.control.Button> userservers(User user) throws RemoteException {
@@ -144,6 +171,8 @@ public class ConcordClientModel extends UnicastRemoteObject implements RMIObserv
 		return dcuserlist;
 	}
 	
+	
+	
 	public ArrayList<Server> getServers() throws RemoteException {
 		ArrayList<Server> servers=cs.getuserservers(user);
 		return servers;
@@ -162,6 +191,16 @@ public class ConcordClientModel extends UnicastRemoteObject implements RMIObserv
 	public void notifyFinished() {
 		System.out.println(" I was notfied");
 		
+	}
+	
+	public ObservableList<User> getblocks(User user1) throws RemoteException, AlreadyBoundException, InterruptedException, NotBoundException{
+		ArrayList<User> blocks=new ArrayList<User>();
+		int id=this.user.id;
+		blocks=cs.getuserblocks(user1.userName);
+		for (int i=0; i<blocks.size(); i++) {
+			blocklist.add(blocks.get(i));
+		}
+		return blocklist;
 	}
 	
 	public ObservableList<Button> getserverusers(String name) throws RemoteException{
@@ -220,6 +259,8 @@ public class ConcordClientModel extends UnicastRemoteObject implements RMIObserv
 	public Channel createchannel(String name) throws RemoteException, AlreadyBoundException, InterruptedException, NotBoundException {
 		Channel channel=cs.addChannel(user, name, server);
 		this.channel=channel;
+		points=new CreateChannel(points);
+		cs.addpoints(points, user);
 		return channel;
 	}
 	
@@ -267,7 +308,9 @@ public class ConcordClientModel extends UnicastRemoteObject implements RMIObserv
 
 
 	public Channel createmessage(String message) throws RemoteException, AlreadyBoundException, InterruptedException, NotBoundException {
-		cs.CreateMessage(user, server, channel, message);
+		cs.CreateMessage(this.user, this.server, this.channel, message);
+		points=new CreateMessage(points);
+		cs.addpoints(points, user);
 		return channel;
 		
 	}
@@ -275,13 +318,17 @@ public class ConcordClientModel extends UnicastRemoteObject implements RMIObserv
 
 	public void sendinvite(String name) throws RemoteException, AlreadyBoundException, InterruptedException, NotBoundException {
 		cs.SendInvite(user, name, server);
+		points=new InviteUser(points);
+		cs.addpoints(points, user);
 		
 	}
 
-
+	
 	public void addMember() throws RemoteException, AlreadyBoundException, InterruptedException, NotBoundException {
 		cs.addMember(user, server);
 		cs.removeinvitedserver(user, server);
+		points=new JoinServer(points);
+		cs.addpoints(points, user);
 		
 	}
 	
@@ -290,7 +337,16 @@ public class ConcordClientModel extends UnicastRemoteObject implements RMIObserv
 	}
 	
 	public void kickuser(String name) throws RemoteException, AlreadyBoundException, InterruptedException, NotBoundException{
-		cs.kick(server, name);
+		cs.kick(server, name, this.user);
+	}
+	
+	public void submitpoints() {
+		try {
+			cs.addpoints(points, user);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 /*
 
@@ -391,39 +447,54 @@ public class ConcordClientModel extends UnicastRemoteObject implements RMIObserv
 
 
 	public void Setprofile(String string) throws RemoteException {
-		cs.setprofile(string, user.userName);
+		cs.setprofile(string, user.id);
 	}
 
 
 	public void Setusername(String usernameLabel) throws RemoteException {
-		cs.setusername(usernameLabel, user.userName);
+		cs.setusername(usernameLabel, user.id);
 	}
 
 
 	public void Setpassword(String passwordLabel) throws RemoteException{
-		cs.setpassword(passwordLabel, user.userName);
+		cs.setpassword(passwordLabel, user.id);
 	}
 
 
 	public void Name(String nameLabel) throws RemoteException {
-		cs.setname(nameLabel, user.userName);
+		cs.setname(nameLabel, user.id);
 		
 	}
 	
 	public ObservableList<String> getinfo() throws RemoteException, AlreadyBoundException, InterruptedException, NotBoundException {
-			for (int i=0; i<3; i++) {
+		this.user=user;
+			for (int i=0; i<4; i++) {
 				if (i==0) {
-					infolist.add(cs.getusername(user));
+					infolist.add("Username:"+ cs.getusername(user));
 				}
 				if (i==1) {
-					infolist.add(cs.getname(user));
+					infolist.add("Name:"+cs.getname(user));
 				}
 				if (i==2) {
-					infolist.add(cs.getprofile(user));
+					infolist.add("TotalPoints:"+cs.gettotalpoints(user));
+				}
+				if(i==3) {
+					infolist.add("Info:"+cs.getprofile(user));
 				}
 			}
 			return infolist;
 		}
+	
+	public ObservableList<String> getleaderboard() throws RemoteException, AlreadyBoundException, InterruptedException, NotBoundException{
+		ArrayList<User> leaders=cs.sortleaderboard();
+		System.out.println(leaders);
+		for (int i=leaders.size()-1; i>0; i--) {
+			String b=Integer.toString(leaders.get(i).getTotalpoints());
+			leaderboardlist.add(leaders.get(i).userName+": "+b);
+		}
+		System.out.println(leaderboardlist);
+		return leaderboardlist;
+	}
 
 
 	@Override

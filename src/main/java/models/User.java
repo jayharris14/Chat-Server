@@ -1,9 +1,11 @@
 package models;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Objects;
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 
 public class User implements Serializable
@@ -14,9 +16,21 @@ public class User implements Serializable
 	HashMap<Server, Role> roles= new HashMap<Server, Role>();
 	UserManager usermanager;
 	ArrayList<Server> invites=new ArrayList<Server>();
+	int totalpoints;
+	Date date = new Date();
+	Timestamp lastlogin = new Timestamp(date.getTime());
+
 	
 	
 	
+	public Timestamp getLastlogin() {
+		return lastlogin;
+	}
+
+	public void setLastlogin(Timestamp lastlogin) {
+		this.lastlogin = lastlogin;
+	}
+
 	@Override
 	public String toString() {
 		return this.userName;
@@ -41,7 +55,7 @@ public class User implements Serializable
 	 * @param password
 	 */
 	public User(String profileData, String userName, Role role, String realName, int id, ArrayList<User> blocks,
-			String profilePic, String password) {
+			String profilePic, String password, int totalpoints, Timestamp lastlogin) {
 		super();
 		this.profileData = profileData;
 		this.userName = userName;
@@ -51,10 +65,20 @@ public class User implements Serializable
 		this.Blocks = blocks;
 		this.profilePic = profilePic;
 		this.password = password;
+		this.totalpoints=totalpoints;
+		this.lastlogin=lastlogin;
+	}
+
+	public int getTotalpoints() {
+		return totalpoints;
+	}
+
+	public void setTotalpoints(int totalpoints) {
+		this.totalpoints = totalpoints;
 	}
 
 	public User() {
-		this(null, "lou", null,"louise", 1, null, null, "lll");
+		this(null, "lou", null,"louise", 1, null, null, "lll", 50, null);
 	}
 	public void setRole(Role role, Server concordServer) {
 		this.role=role;
@@ -158,7 +182,7 @@ public class User implements Serializable
 	 */
 	String realName;
 	int id;
-	ArrayList<User> Blocks= new ArrayList<User>();
+	ArrayList<User> Blocks;
 	String profilePic;
 	String password;
 	
@@ -176,7 +200,7 @@ public class User implements Serializable
 
 		public void addBlock(User BlockedUser)
 		{
-			Blocks.add(BlockedUser);
+			this.getBlocks().add(BlockedUser);
 		}
 		public void removeBlock(User BlockedUser)
 		{

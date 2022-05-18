@@ -1,23 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.ServerController">
+<BorderPane id="serverbox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.ServerController">
    <center>
       <BorderPane prefHeight="388.0" prefWidth="362.0" BorderPane.alignment="CENTER">
          <left>
             <VBox maxHeight="-Infinity" prefHeight="400.0" prefWidth="100.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label prefHeight="15.0" prefWidth="86.0" text="Channels" />
-                  <ListView fx:id="channelView" maxHeight="-Infinity" onMouseClicked="#onClickChannelButton" prefHeight="336.0" prefWidth="200.0" />
-                  <Label text="Add Channel" />
+                  <Label prefHeight="15.0" prefWidth="86.0" text="Channels" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font></Label>
+                  <ListView id="scbox" fx:id="channelView" maxHeight="-Infinity" onMouseClicked="#onClickChannelButton" prefHeight="336.0" prefWidth="200.0" />
+                  <Label text="Add Channel" textFill="WHITE">
+                  <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font></Label>
                   <TextField id="channellabel" fx:id="channelnameLabel" />
                   <Button id="channelbutton" mnemonicParsing="false" onAction="#onClickChannelButton" text="Add" />
-                  <Label text="Invite User" />
+                  <Label text="Invite User" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font></Label>
                   <TextField id="invite" fx:id="inviteLabel" />
                   <Button id="invitebutton" mnemonicParsing="false" onAction="#onClickInviteButton" prefHeight="25.0" prefWidth="59.0" text="Invite" />
                </children>
@@ -26,11 +36,17 @@
          <right>
             <VBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="400.0" prefWidth="100.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label text="Users" />
-                  <ListView fx:id="userView" maxHeight="-Infinity" prefHeight="310.0" prefWidth="200.0" />
-                  <Label text="Kick User" />
-                  <TextField fx:id="kickLabel" />
-                  <Button mnemonicParsing="false" onAction="#onClickKickButton" text="Kick" />
+                  <Label text="Users" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font></Label>
+                  <ListView id="subox" fx:id="userView" maxHeight="-Infinity" prefHeight="310.0" prefWidth="200.0" />
+                  <Label text="Kick User" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font></Label>
+                  <TextField id="kicklabel" fx:id="kickLabel" />
+                  <Button id="kickbutton" mnemonicParsing="false" onAction="#onClickKickButton" text="Kick" />
                </children>
             </VBox>
          </right>

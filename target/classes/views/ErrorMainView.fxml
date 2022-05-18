@@ -30,7 +30,7 @@
                   </HBox>
                   <BorderPane prefHeight="100.0" prefWidth="200.0">
                      <center>
-                        <Button mnemonicParsing="false" onAction="#onClickLogIn" text="Log In" BorderPane.alignment="CENTER" />
+                        <Button id="loginbutton" mnemonicParsing="false" onAction="#onClickLogIn" text="Log In" BorderPane.alignment="CENTER" />
                      </center>
                   </BorderPane>
                   <Label text="Username/password combination " textFill="#f50202" />
@@ -41,7 +41,7 @@
          <bottom>
             <VBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="100.0" prefWidth="125.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button mnemonicParsing="false" onAction="#onClickCreateAccount" text="Create Account" />
+                  <Button id="createaccountbutton" mnemonicParsing="false" onAction="#onClickCreateAccount" text="Create Account" />
                </children>
             </VBox>
          </bottom>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
@@ -8,23 +9,29 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.MainController">
    <center>
-      <BorderPane prefHeight="380.0" prefWidth="300.0" BorderPane.alignment="CENTER">
+      <BorderPane id="login" prefHeight="380.0" prefWidth="300.0" BorderPane.alignment="CENTER">
          <center>
             <VBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="180.0" prefWidth="250.0" BorderPane.alignment="CENTER">
                <children>
                   <HBox prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <Label text="UserName" translateX="-3.0">
+                        <Label text="UserName" translateX="-6.0">
                            <padding>
                               <Insets top="10.0" />
                            </padding>
+                           <font>
+                              <Font name="Nakula" size="13.0" />
+                           </font>
                         </Label>
-                        <TextField fx:id="userNameLabel" />
+                        <TextField fx:id="userNameLabel" translateX="-5.0" />
                      </children>
                   </HBox>
                   <HBox prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <Label text="Password" />
+                        <Label text="Password">
+                           <font>
+                              <Font name="Nakula" size="13.0" />
+                           </font></Label>
                         <TextField fx:id="passWordLabel" />
                      </children>
                   </HBox>
@@ -33,6 +40,11 @@
                         <Button id="loginbutton" mnemonicParsing="false" onAction="#onClickLogIn" text="Log In" BorderPane.alignment="CENTER" />
                      </center>
                   </BorderPane>
+                  <Label text="C" textAlignment="JUSTIFY" translateX="100.0" translateY="30.0">
+                     <font>
+                        <Font name="FreeSerif" size="72.0" />
+                     </font>
+                  </Label>
                </children>
             </VBox>
          </center>

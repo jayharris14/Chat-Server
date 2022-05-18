@@ -9,6 +9,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import views.CreateAccountController;
 import views.DirectConversationController;
+import views.LeaderBoardController;
 import views.MainController;
 import views.ServerController;
 import views.UserInfoController;
@@ -148,7 +149,19 @@ public class ViewTransitionalModel implements ViewTransitionModelInterface
 				e.printStackTrace();
 			}
 		}
-		
+		public void showLeaderBoard() throws AlreadyBoundException, InterruptedException, NotBoundException {
+			FXMLLoader loader=new FXMLLoader();
+			loader.setLocation(ViewTransitionalModel.class.getResource("../views/LeaderBoardView.fxml"));
+			try {
+				Pane view=loader.load();
+				mainview.setCenter(view);
+				LeaderBoardController cont=loader.getController();
+				cont.setModel(this, model);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		
 		
 }

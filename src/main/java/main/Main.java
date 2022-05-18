@@ -1,5 +1,6 @@
 package main;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import javafx.application.Application;
@@ -10,6 +11,7 @@ import javafx.stage.Stage;
 import models.ViewTransitionalModel;
 import models.ConcordClientModel;
 import models.ConcordServer;
+import models.User;
 import views.MainController;
 
 public class Main extends Application {
@@ -27,6 +29,7 @@ public class Main extends Application {
 		cont.setModel(vm, concordclientmodel);
 		
 		Scene s=new Scene(view);
+		s.getStylesheets().add(getClass().getResource("../views/application.css").toExternalForm());
 		stage.setScene(s);
 		stage.show();
 	}

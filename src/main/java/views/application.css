@@ -1,0 +1,176 @@
+#background{
+	-fx-background-color: black;
+}
+
+#serverbox{
+	-fx-background-color: black;
+}
+
+#scbox{
+	-fx-border-color: purple;
+	
+}
+
+#subox{
+	-fx-border-color: purple;
+}
+
+#channelbutton{
+	-fx-background-color:white;
+	-fx-text-fill:black;
+	-fx-border-color: purple;
+}
+
+#invitebutton{
+	-fx-background-color:white;
+	-fx-text-fill:black;
+	-fx-border-color: purple;
+}
+
+#loginbutton{
+	-fx-background-color:white;
+	-fx-text-fill:black;
+	-fx-border-color: purple;
+}
+
+#createbutton{
+	-fx-background-color:white;
+	-fx-text-fill:black;
+	-fx-border-color: purple;
+}
+
+#acceptbutton{
+	-fx-background-color:white;
+	-fx-text-fill:black;
+	-fx-border-color: purple;
+}
+#declinebutton{
+	-fx-background-color:white;
+	-fx-text-fill:black;
+	-fx-border-color: purple;
+}
+#closebutton{
+	-fx-background-color:white;
+	-fx-text-fill:black;
+	-fx-border-color: purple;
+}
+
+#leaderboardbackbutton{
+	-fx-background-color:white;
+	-fx-text-fill:black;
+	-fx-border-color: purple;
+}
+
+#submitbutton{
+	-fx-background-color:white;
+	-fx-text-fill:black;
+	-fx-border-color: purple;
+}
+
+
+
+#kickbutton{
+	-fx-background-color:white;
+	-fx-text-fill:black;
+	-fx-border-color: purple;
+}
+
+#backbutton{
+	-fx-background-color:white;
+	-fx-text-fill:black;
+	-fx-border-color: purple;
+}
+
+#messagebutton{
+	-fx-background-color:white;
+	-fx-text-fill:black;
+	-fx-border-color: purple;
+}
+
+#logoutbutton2{
+	-fx-background-color:white;
+	-fx-text-fill:black;
+	-fx-border-color: purple;
+}
+#channellabel{
+	-fx-border-color: purple;
+}
+#invite{
+	-fx-border-color: purple;
+}
+#kicklabel{
+	-fx-border-color: purple;
+}
+#login{
+	-fx-background-color:white;
+	-fx-border-color: black
+}
+
+#invitesbox{
+	-fx-border-color: purple;
+}
+
+#serverbackground{
+	-fx-border-color :purple;
+}
+
+#loginbutton{
+	-fx-background-color:black;
+	-fx-text-fill:white;
+}
+
+#createaccountbutton{
+	-fx-background-color:black;
+	-fx-text-fill:white;
+}
+
+#Password{
+	-fx-font-family: Monospaced Plain;
+}
+
+#UserName{
+	-fx-font-family: Monospaced Plain;
+}
+
+#serverbutton{
+	-fx-background-color:white;
+	-fx-text-fill:black;
+	-fx-border-color: purple;
+	
+}
+
+#leaderboard{
+	-fx-background-color:white;
+	-fx-text-fill:black;
+	-fx-border-color: purple;
+	
+}
+
+#refresh{
+	-fx-background-color:white;
+	-fx-text-fill:black;
+	-fx-border-color: purple;
+	
+}
+
+#logoutbutton{
+	-fx-background-color:white;
+	-fx-text-fill:black;
+	-fx-border-color: purple;
+	
+}
+
+#editinfo{
+	-fx-background-color:white;
+	-fx-text-fill:black;
+	-fx-border-color: purple;
+	
+}
+.root{
+	-fx-background-color: black;
+}
+
+.button{
+	-fx-background-color:black;
+	-fx-text-fill:white;
+}

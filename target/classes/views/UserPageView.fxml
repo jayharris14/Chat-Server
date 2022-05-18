@@ -1,39 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.UserPageController">
+<BorderPane id="background" prefHeight="470.0" prefWidth="362.0" style="-fx-backgroound-color" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.UserPageController">
    <center>
-      <BorderPane prefHeight="388.0" prefWidth="362.0" BorderPane.alignment="CENTER">
+      <BorderPane id="background2" fx:id="background" prefHeight="388.0" prefWidth="362.0" BorderPane.alignment="CENTER">
          <left>
-            <VBox maxHeight="-Infinity" prefHeight="280.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+            <VBox id="serverbackground" fx:id="serverbox" maxHeight="-Infinity" prefHeight="280.0" prefWidth="131.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label text="Servers" />
-                  <ListView id="serverview" fx:id="serverView" maxHeight="-Infinity" onMouseClicked="#onClickButton" prefHeight="250.0" prefWidth="200.0" />
-                  <Label text="Create Server" />
+                  <Label text="Servers" textFill="WHITE">
+                  <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font></Label>
+                  <ListView id="serverview" fx:id="serverView" maxHeight="-Infinity" onMouseClicked="#onClickButton" prefHeight="200.0" prefWidth="156.0" />
+                  <Label text="Create Server" textFill="WHITE">
+                  <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font></Label>
                   <TextField id="serverlabel" fx:id="servernameLabel" />
                   <Button id="serverbutton" mnemonicParsing="false" onAction="#onClickButton" text="Create" />
+                  <Button id="leaderboard" fx:id="leaderboardbutton" mnemonicParsing="false" onAction="#onClickLeaderBoardButton" text="LeaderBoard" />
                </children>
             </VBox>
          </left>
          <right>
-            <VBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="300.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+            <VBox id="invitesbox" fx:id="invitebox" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="332.0" prefWidth="142.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label text="Invites" />
-                  <ListView fx:id="inviteView" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="184.0" prefWidth="100.0" />
-                  <Button mnemonicParsing="false" onAction="#onClickEditButton" text="Edit Info" translateY="100.0" />
+                  <Label text="Invites" textFill="WHITE">
+                  <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font></Label>
+                  <ListView fx:id="inviteView" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="150.0" prefWidth="142.0" />
+                  <Label text="Blocks" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font></Label>
+                  <ListView fx:id="blocklistView" prefHeight="138.0" prefWidth="100.0" />
+                  <Label text="Add Block" textFill="WHITE">
+                  <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font></Label>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <TextField id="blocklabel" fx:id="blocklabel" prefHeight="25.0" prefWidth="84.0" />
+                        <Button id="blockbutton" mnemonicParsing="false" onAction="#onClickAddBlock" text="Block" />
+                     </children>
+                  </HBox>
+                  <Label text="User Info" textFill="WHITE">
+                  <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font></Label>
+                  <ListView fx:id="userinfoView" prefHeight="147.0" prefWidth="142.0" />
+                  <Button id="editinfo" mnemonicParsing="false" onAction="#onClickEditButton" text="Edit Info" />
                </children>
             </VBox>
          </right>
          <top>
-            <Button mnemonicParsing="false" onAction="#onClickRefresh" text="Refresh" translateX="120.0" translateY="20.0" BorderPane.alignment="CENTER" />
+            <Button id="refresh" mnemonicParsing="false" onAction="#onClickRefresh" text="Refresh" translateX="120.0" BorderPane.alignment="CENTER" />
          </top>
          <bottom>
             <Button id="logoutbutton" mnemonicParsing="false" onAction="#onClickLogoutButton" text="Log out" BorderPane.alignment="CENTER" />
          </bottom></BorderPane>
    </center>
+   <top>
+      <Label id="c" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="27.0" prefWidth="51.0" text="C" textFill="#71208a" translateX="-125.0" translateY="25.0" BorderPane.alignment="CENTER">
+         <font>
+            <Font name="System Bold Italic" size="50.0" />
+         </font>
+         <rotationAxis>
+            <Point3D />
+         </rotationAxis>
+      </Label>
+   </top>
 </BorderPane>
